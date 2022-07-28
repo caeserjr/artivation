@@ -1,0 +1,30 @@
+{
+  "PORT": 5050,
+  "HOST": "0.0.0.0",
+  "DATABASE": {
+    "DIALECT": "oracledb",
+    "HOST": "172.16.2.180",
+    "PORT": 1521,
+    "USER": "rmu",
+    "PASSWORD": "rmuumr",
+    "DATABASE": "SYMPROD",
+    "POOL_MIN_SIZE": 10,
+    "POOL_MAX_SIZE": 10,
+    "ACQUIRE_TIMEOUT_MILLIS": 30000,
+    "CREATE_TIMEOUT_MILLIS": 30000,
+    "DESTROY_TIMEOUT_MILLIS": 5000,
+    "IDLE_TIMEOUT_MILLIS": 30000,
+    "REAP_INTERVAL_MILLIS": 1000,
+    "CREATE_RETRY_INTERVAL_MILLIS": 200
+  },
+  "DISPLAY_ROUTES": true,
+  "RUN_MIGRATIONS": true,
+  "ENDPOINT_CACHE_CONFIG": {
+    "expiresIn": 180000,
+    "generateTimeout": 30000
+  },
+  "ERROR_HANDLING": {
+    "includeCauseExtension": false,
+    "truncateExtensions": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "cSpell.words": ["MILLIS", "rmuumr", "SYMPROD"],
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#a5c5a3",
+    "activityBar.activeBorder": "#7679a9",
+    "activityBar.background": "#a5c5a3",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#7679a9",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#a5c5a3",
+    "statusBar.background": "#87b184",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#699d65",
+    "statusBarItem.remoteBackground": "#87b184",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#87b184",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#87b18499",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#87b184"
+}
