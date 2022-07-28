@@ -1,0 +1,61 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index",
+    "start:linux": "PORT=1912 react-scripts start"
+  },
+  "author": "Ghalib Abdulla",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2",
+    "@hapi/inert": "^7.0.0",
+    "@hapi/joi": "^17.1.1",
+    "@hapi/jwt": "^2.1.1",
+    "@hapi/vision": "^7.0.0",
+    "amqplib": "^0.10.1",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.20.0",
+    "body-parser-xml": "^2.0.3",
+    "boom": "^7.3.0",
+    "child_process": "^1.0.2",
+    "dateformat": "^5.0.3",
+    "dotenv": "^16.0.1",
+    "fs": "0.0.1-security",
+    "hapi": "^18.1.0",
+    "hapi-auth-jwt": "^4.0.0",
+    "hapi-swagger": "^14.5.5",
+    "hapi-swaggered": "^3.1.0",
+    "hapi-swaggered-ui": "^3.1.0",
+    "http": "0.0.1-security",
+    "inert": "^5.1.3",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "ldap-authentication": "^2.2.9",
+    "ldapjs": "^2.3.3",
+    "moment": "^2.29.4",
+    "mssql": "^8.1.2",
+    "node-fetch": "^3.2.9",
+    "nodemailer": "^6.7.7",
+    "nodemon": "^2.0.19",
+    "oracledb": "^5.4.0",
+    "parse-strings-in-object": "^1.6.0",
+    "pg-promise": "^10.11.1",
+    "rc": "^1.2.8",
+    "util": "^0.12.4",
+    "vision": "^5.4.4",
+    "xml2js": "^0.4.23"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caeserjr/artivation.git"
+  },
+  "keywords": [],
+  "description": ""
+}

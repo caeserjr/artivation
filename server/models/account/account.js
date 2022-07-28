@@ -3,8 +3,8 @@ const config = require("../../config/config");
 const { successMessage, errorMessage } = require("../../lib/constants/common");
 const Logger = require("../logger/logger");
 
-const checkBalance = async (fileNumber) => {
-  if (fileNumber) {
+const checkBalance = async (email) => {
+  if (email) {
     try {
       //! hit backend request balances
       return successMessage({

@@ -12,7 +12,7 @@ const { generateOTP, generateToken, validateToken } = require("../../utils");
 const Logger = require("../logger/logger");
 
 
-const userLogin = async ({ fileNumber, password }) => {
+const userLogin = async ({ email, password }) => {
   let otp = 1234; //generateOTP();
 
   console.log("🚀 ~ file: auth.js ~ line 15 ~ userLogin ~ otp", otp);
@@ -34,13 +34,13 @@ const userLogin = async ({ fileNumber, password }) => {
     //   reqOpts
     // );
     if (true) {
-      //! save fileNumber and object from server response
+      //! save email and object from server response
       let payload = {
-        fileNumber: fileNumber,
+        email: email,
         otp: otp,
         data: {
           userDetails: {
-            fileNumber: fileNumber,
+            email: email,
             fullName: "Mbwana S Athman",
             accountNumber: "9923131930",
             mobileNumber: "077895622",
@@ -54,7 +54,7 @@ const userLogin = async ({ fileNumber, password }) => {
       };
 
       //* check if file number exists in the user object
-      addToUserObject(fileNumber, payload);
+      addToUserObject(email, payload);
       return successMessage("Login successful.");
     } else {
       return errorMessage("Invalid credentials provided.");
@@ -65,7 +65,7 @@ const userLogin = async ({ fileNumber, password }) => {
   }
 };
 
-const changePassword = async ({ fileNumber, currentPassword, newPassword }) => {
+const changePassword = async ({ email, currentPassword, newPassword }) => {
 
   // const activeSession = localStorage.getItem("activeSession")
   //   ? JSON.parse(localStorage.getItem("activeSession"))
@@ -94,7 +94,7 @@ const changePassword = async ({ fileNumber, currentPassword, newPassword }) => {
   } catch (error) { }
 };
 
-const changePortalPin = async ({ fileNumber, newPin, currentPin }) => {
+const changePortalPin = async ({ email, newPin, currentPin }) => {
 
   if (parseInt(currentPin) === 1234) {
     return successMessage("PIN changed successfully");
@@ -124,7 +124,7 @@ const changePortalPin = async ({ fileNumber, newPin, currentPin }) => {
   // } catch (error) { }
 };
 
-const verifyPin = async ({ fileNumber, pin }) => {
+const verifyPin = async ({ email, pin }) => {
   const reqOpts = {
     headers: {
       // Authorization: `Bearer ${activeSession?.token}`,
@@ -146,11 +146,11 @@ const verifyPin = async ({ fileNumber, pin }) => {
   }
 };
 
-const verifyOTP = async ({ fileNumber, otp, action }) => {
+const verifyOTP = async ({ email, otp, action }) => {
   if (userObjects.length > 0) {
     if (action === "login") {
       let _isValid = userObjects.find(
-        (user) => user.fileNumber === fileNumber && user.otp == otp
+        (user) => user.email === email && user.otp == otp
       );
 
       if (_isValid) {
@@ -158,10 +158,10 @@ const verifyOTP = async ({ fileNumber, otp, action }) => {
         let payload = _isValid.data.userDetails;
 
         //* remove item from user objects
-        removeUserObject(fileNumber);
+        removeUserObject(email);
 
         //* generate token
-        let accessToken = await generateToken(fileNumber);
+        let accessToken = await generateToken(email);
         return {
           status: "success",
           data: {
@@ -183,7 +183,7 @@ const verifyOTP = async ({ fileNumber, otp, action }) => {
   }
 };
 
-const requestOTP = async ({ fileNumber }) => {
+const requestOTP = async ({ email }) => {
   let payload = {};
   let otp = generateOTP();
   const reqOpts = {
@@ -201,7 +201,7 @@ const requestOTP = async ({ fileNumber }) => {
     // const response = await adminServiceApi.post("/account/requestOTP", reqOpts);
     if (true /* response.code === 200 */) {
       //* check if file number exists in the user object
-      addToUserObject(fileNumber, payload);
+      addToUserObject(email, payload);
       return successMessage(otp);
     }
   } catch (error) {

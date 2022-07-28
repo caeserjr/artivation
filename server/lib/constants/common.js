@@ -8,8 +8,8 @@ const errorMessage = (msg) => {
   return { status: "error", data: msg }
 }
 
-const addToUserObject = (fileNumber, payload) => {
-  let index = userObjects.findIndex((i) => i.fileNumber === fileNumber);
+const addToUserObject = (email, payload) => {
+  let index = userObjects.findIndex((i) => i.email === email);
   if (index === -1) {
     userObjects.push(payload);
   } else {
@@ -18,8 +18,8 @@ const addToUserObject = (fileNumber, payload) => {
   return true;
 };
 
-const removeUserObject = (fileNumber) => {
-  let index = userObjects.findIndex((i) => i.fileNumber === fileNumber);
+const removeUserObject = (email) => {
+  let index = userObjects.findIndex((i) => i.email === email);
   if (index > -1) {
     userObjects.splice(index, 1);
     return true;
