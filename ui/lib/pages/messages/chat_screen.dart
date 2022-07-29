@@ -98,8 +98,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _formatter = new DateFormat('dd-mm-yyyy HH:mm:ss');
-
     return SafeArea(
         child: Scaffold(
       body: Column(
@@ -124,9 +122,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           floatingHeader: true,
                           elements: messages,
                           groupBy: (message) => DateTime(
-                            _formatter.parse(message.date).year,
-                            _formatter.parse(message.date).month,
-                            _formatter.parse(message.date).day,
+                            DateTime.parse(message.date).year,
+                            DateTime.parse(message.date).month,
+                            DateTime.parse(message.date).day,
                           ),
                           groupHeaderBuilder: (Message message) => SizedBox(
                             height: 30,
@@ -138,17 +136,26 @@ class _ChatScreenState extends State<ChatScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
-                                    DateFormat.yMMMd().format(
-                                              _formatter
-                                                  .parse("${message.date}"),
-                                            ) ==
-                                            DateFormat.yMMMd().format(
-                                              DateTime.now(),
+                                    DateFormat.yMd().format(
+                                                DateTime.parse(message.date)) ==
+                                            DateFormat.yMd().format(
+                                              new DateTime.now(),
                                             )
-                                        ? "today"
-                                        : DateFormat.yMMMd().format(
-                                            _formatter.parse("${message.date}"),
-                                          ),
+                                        ? "Today"
+                                        : DateFormat.yMd().format(
+                                                  DateTime.parse(message.date),
+                                                ) ==
+                                                DateFormat.yMd().format(
+                                                  new DateTime.now().subtract(
+                                                    Duration(
+                                                      days: 1,
+                                                    ),
+                                                  ),
+                                                )
+                                            ? "Yesterday"
+                                            : DateFormat.yMMMd().format(
+                                                DateTime.parse(message.date),
+                                              ),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -160,7 +167,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           itemBuilder: (context, Message message) => ChatBubble(
                             content: message.content,
-                            isSender: message.sender == true ? true : false,
+                            //! if logged in user is me
+                            isSender: message.sender == 1 ? true : false,
                           ),
                         ),
                       )

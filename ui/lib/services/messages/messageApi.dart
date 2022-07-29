@@ -94,10 +94,31 @@ class MessagesApi {
 
         var _formatter = new DateFormat('dd-mm-yyyy HH:mm:ss');
 
-        print('BACKEND ${_messageList[1].date}');
-        print(_formatter.parse(_messageList[1].date).year);
-        print(_formatter.parse(_messageList[1].date).month);
-        print(_formatter.parse(_messageList[1].date).day);
+        print(
+            'converted time to ${DateTime.parse(_messageList[4].date).subtract(
+                  const Duration(
+                    days: 1,
+                  ),
+                ).toString().toLowerCase()}');
+
+        var theyMatch = DateFormat.yMd()
+            .format(
+              DateTime.now(),
+            )
+            .toString()
+            .toLowerCase()
+            .compareTo(
+              DateFormat.yMd()
+                  .format(
+                    _formatter.parse(_messageList[3].date),
+                  )
+                  .toString()
+                  .toLowerCase(),
+            );
+        print(theyMatch);
+        // ? print('now')
+        // : print('no bueno');
+
         return _messageList;
       } else {
         return ErrorResponse(
