@@ -13,9 +13,8 @@ const getOrDefault = (value, defaultValue) => {
 };
 
 const SERVICES_BASE_URL = "172.26.40.11";
-const TOKEN_KEY = "dntb2lzykm1z900D";
-const APP_NAME = "BOT Mobile Banking";
-const API_KEY = "keyfromServer";
+const TOKEN_KEY = `Ns[.T35cAb"7g ^ gg51Yl]:xO{NC[? d`;
+const APP_NAME = "Artivation";
 
 module.exports = {
   TOKEN_KEY: process.env.TOKEN_KEY || TOKEN_KEY,
@@ -24,7 +23,7 @@ module.exports = {
   HOST: RC.HOST,
   LOGS_PATH: process.env.LOGS_PATH || "",
   ADMIN_SERVICE_URL:
-    process.env.REACT_APP_ADMIN_SERVICE_URL || `${SERVICES_BASE_URL}:8080`,
+    process.env.REACT_APP_ADMIN_SERVICE_URL || `${SERVICES_BASE_URL}: 8080`,
   ACCOUNT_SERVICE_URL:
-    process.env.REACT_APP_ACCOUNT_SERVICE_URL || `${SERVICES_BASE_URL}:9093`,
+    process.env.REACT_APP_ACCOUNT_SERVICE_URL || `${SERVICES_BASE_URL}: 9093`,
 };

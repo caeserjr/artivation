@@ -27,19 +27,35 @@ class AuthApi {
       },
     );
 
-    print(payload);
-
     if (response.statusCode == 200) {
       var resultJSON = jsonDecode(response.body);
-      return resultJSON;
+      if (resultJSON["status"] == "success") {
+        return resultJSON["data"];
+      } else {
+        return ErrorResponse(
+          message: resultJSON["data"],
+          content: response.toString(),
+          statusCode: response.statusCode,
+        );
+      }
+    } else if (response.statusCode == 400) {
+      return ErrorResponse(
+        message: "Invalid user request.",
+        content: response.toString(),
+        statusCode: response.statusCode,
+      );
     } else if (response.statusCode == 408) {
+      return ErrorResponse(
+        message: "Server unreachable.",
+        content: response.toString(),
+        statusCode: response.statusCode,
+      );
+    } else {
       return ErrorResponse(
         message: "An error has occurred.",
         content: response.toString(),
         statusCode: response.statusCode,
       );
-    } else {
-      
     }
   }
 }

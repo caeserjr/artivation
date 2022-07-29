@@ -1,8 +1,11 @@
 import 'package:Artivation/constants/constants.dart';
+import 'package:Artivation/handlers/error_responses.dart';
 import 'package:Artivation/models/messages.dart';
+import 'package:Artivation/screens/widgets/loading_container.dart';
+import 'package:Artivation/services/messages/messageApi.dart';
 import 'package:Artivation/widgets/app_text.dart';
+import 'package:Artivation/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Inbox extends StatefulWidget {
   const Inbox({Key key}) : super(key: key);
@@ -12,43 +15,126 @@ class Inbox extends StatefulWidget {
 }
 
 class _InboxState extends State<Inbox> {
+  bool _loading;
+  List<Message> chats;
+
+  @override
+  void initState() {
+    _loading = false;
+    chats = [];
+    getInboxItems();
+    super.initState();
+  }
+
+  void _showMessageDialog({
+    String message,
+    String severity,
+    dynamic positiveButtonCallback,
+    String positiveButtonText,
+    dynamic negativeButtonCallback,
+    String negativeButtonText,
+    String type,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: MessageDialog(
+            message: message,
+            negativeButtonCallback: negativeButtonCallback,
+            negativeButtonText: negativeButtonText,
+            positiveButtonCallback: positiveButtonCallback,
+            positiveButtonText: positiveButtonText,
+            severity: severity,
+            type: "alert",
+          ),
+        );
+      },
+    ).then(
+      (val) {},
+    );
+  }
+
+  void getInboxItems() async {
+    // var storage = await SharedPreferences.getInstance();
+    setState(() {
+      _loading = true;
+    });
+
+    var _response = await MessagesApi.getConversations(
+      payload: {
+        "userId": 1,
+        // "userId": storage.getString("userId"),
+      },
+    );
+
+    setState(() {
+      _loading = false;
+    });
+
+    if (_response.runtimeType.toString() == "ErrorResponse") {
+      ErrorResponse _error = _response;
+      _showMessageDialog(
+        message: _error.message,
+        severity: "error",
+        type: "alert",
+        positiveButtonCallback: () {
+          Navigator.of(context).pop();
+        },
+        positiveButtonText: "OK",
+      );
+    } else {
+      setState(() {
+        chats = _response;
+      });
+
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(builder: (context) => HomePage()),
+      //     (route) => false);
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          margin: EdgeInsets.only(top: 40),
-          child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemCount: chats.length,
-            itemBuilder: ((_, index) {
-              return InboxItem(
-                sentBy: chats[index].sender.firstName +
-                    " " +
-                    chats[index].sender.middleName +
-                    " " +
-                    chats[index].sender.lastName,
-                msgPreview: chats[index].content,
-                image: chats[index].sender.imageUrl,
-                time: chats[index].date,
-                unread: chats[index].unread,
-              );
-            }),
-          ),
-        ),
+        body: _loading
+            ? LoadingContainer()
+            : Container(
+                margin: EdgeInsets.only(top: 40),
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: chats.length,
+                  itemBuilder: ((_, index) {
+                    return InboxItem(
+                      sentBy: chats[index].senderName,
+                      msgPreview: chats[index].content,
+                      image: chats[index].senderImage,
+                      time: chats[index].date,
+                      unread: chats[index].unread,
+                      chatId: chats[index].chatId,
+                    );
+                  }),
+                ),
+              ),
       ),
     );
   }
 }
 
-class InboxItem extends StatelessWidget {
+class InboxItem extends StatefulWidget {
   final String sentBy, msgPreview, image;
   final bool unread;
-  final DateTime time;
+  final String time;
+  final int chatId;
 
   const InboxItem({
     Key key,
     this.msgPreview,
+    this.chatId,
     this.image,
     this.sentBy,
     this.time,
@@ -56,19 +142,25 @@ class InboxItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<InboxItem> createState() => _InboxItemState();
+}
+
+class _InboxItemState extends State<InboxItem> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {},
       onTap: () {
-        Navigator.of(context).pushNamed("Messages");
+        Navigator.of(context).pushNamed("Messages", arguments: widget.chatId);
       },
       child: Container(
         height: 70,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(top: 2.5, right: 10),
         decoration: BoxDecoration(
-          color:
-              unread ? Color.fromARGB(96, 204, 219, 215) : Colors.transparent,
+          color: widget.unread
+              ? Color.fromARGB(96, 204, 219, 215)
+              : Colors.transparent,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(10),
             bottomRight: Radius.circular(10),
@@ -86,7 +178,7 @@ class InboxItem extends StatelessWidget {
                   width: 45,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(image),
+                      image: AssetImage(widget.image),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(100),
@@ -108,7 +200,7 @@ class InboxItem extends StatelessWidget {
                             width: MediaQuery.of(context).size.width - 90,
                             child: AppText(
                               size: 15,
-                              text: sentBy,
+                              text: widget.sentBy,
                               isBold: true,
                             ),
                           ),
@@ -119,7 +211,7 @@ class InboxItem extends StatelessWidget {
                             width: MediaQuery.of(context).size.width - 90,
                             child: AppText(
                               size: 14,
-                              text: msgPreview,
+                              text: widget.msgPreview,
                             ),
                           ),
                         ),
@@ -134,7 +226,7 @@ class InboxItem extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    DateFormat.Hm().format(time),
+                    widget.time,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

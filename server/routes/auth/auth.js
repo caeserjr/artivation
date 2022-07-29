@@ -5,7 +5,7 @@ const {
   requestOTP,
   changePassword,
   changePortalPin,
-} = require("../../models/auth/auth");
+} = require("../../models/auth/authModel");
 const Joi = require("@hapi/joi");
 const { params } = require("@hapi/hapi/lib/validation");
 const { renewToken } = require("../../utils");

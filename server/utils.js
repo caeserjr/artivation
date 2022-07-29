@@ -23,7 +23,7 @@ const generateToken = async (email) => {
   const token = jwt.sign(
     {
       aud: false,
-      iss: "Bank of Tanzania",
+      iss: "Artivation",
       sub: false,
       email: email,
       generatedAt: currentTime,
@@ -42,7 +42,7 @@ const validateToken = async (token) => {
     newToken,
     TOKEN_KEY,
     {
-      iss: "Bank of Tanzania",
+      iss: "Artivation",
       aud: false,
       sub: false,
       nbf: true,

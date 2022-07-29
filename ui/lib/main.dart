@@ -57,7 +57,9 @@ class MyApp extends StatelessWidget {
             );
           case 'Messages':
             return MaterialPageRoute(
-              builder: (context) => ChatScreen(),
+              builder: (context) => ChatScreen(
+                chatId: settings.arguments,
+              ),
             );
           default:
             return null;

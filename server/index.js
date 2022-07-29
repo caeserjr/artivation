@@ -3,11 +3,13 @@ const Jwt = require("@hapi/jwt");
 const jwt = require("jsonwebtoken");
 const config = require("./config/config");
 
-var auth = require("./routes/auth/auth");
-var transfers = require("./routes/transfers/transfers");
-var accountDetails = require("./routes/account/account");
 const { TOKEN_KEY } = require("./config/config");
 const { validateToken } = require("./utils");
+
+const users = require("./routes/users/users");
+var auth = require("./routes/auth/auth");
+var accountDetails = require("./routes/account/account");
+const messages = require("./routes/messages/messages");
 
 const init = async () => {
   const server = new Hapi.Server({
@@ -44,7 +46,7 @@ const init = async () => {
     keys: TOKEN_KEY,
     verify: {
       aud: false,
-      iss: "Bank of Tanzania",
+      iss: "Artivation",
       sub: false,
       nbf: true,
     },
@@ -63,8 +65,9 @@ const init = async () => {
   });
 
   server.route(auth);
-  server.route(transfers);
   server.route(accountDetails);
+  server.route(users);
+  server.route(messages);
 
   await server.start();
 

@@ -1,4 +1,5 @@
 import 'package:Artivation/constants/constants.dart';
+import 'package:Artivation/handlers/error_responses.dart';
 import 'package:Artivation/pages/signup/components/ordivider.dart';
 import 'package:Artivation/pages/signup/components/social_icons.dart';
 import 'package:Artivation/pages/signup/signup.dart';
@@ -8,6 +9,7 @@ import 'package:Artivation/pages/router.dart';
 import 'package:Artivation/screens/components/rounded_button.dart';
 import 'package:Artivation/screens/components/text_container.dart';
 import 'package:Artivation/services/auth/authApi.dart';
+import 'package:Artivation/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,8 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   String email, password;
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
-  bool _obscureText = true;
-  bool _loading = true;
+  bool _obscureText;
+  bool _loading;
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     email = "";
     password = "";
     _loading = false;
+    _obscureText = true;
   }
 
   @override
@@ -39,19 +42,66 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void _showMessageDialog({
+    String message,
+    String severity,
+    dynamic positiveButtonCallback,
+    String positiveButtonText,
+    dynamic negativeButtonCallback,
+    String negativeButtonText,
+    String type,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: MessageDialog(
+            message: message,
+            negativeButtonCallback: negativeButtonCallback,
+            negativeButtonText: negativeButtonText,
+            positiveButtonCallback: positiveButtonCallback,
+            positiveButtonText: positiveButtonText,
+            severity: severity,
+            type: type,
+          ),
+        );
+      },
+    ).then((val) {});
+  }
+
   void login() async {
+    setState(() {
+      _loading = true;
+    });
+
     var _response = await AuthApi.userLogin(
-      payload: {email: email, password: password},
+      payload: {"email": email, "password": password},
     );
-    print(_response);
+
+    setState(() {
+      _loading = false;
+    });
     if (_response.runtimeType.toString() == "ErrorResponse") {
-      //! show dialog/ alert to user
+      ErrorResponse _error = _response;
+      _showMessageDialog(
+        message: _error.message,
+        severity: "error",
+        type: "alert",
+        positiveButtonCallback: () {
+          Navigator.of(context).pop();
+        },
+        positiveButtonText: "OK",
+      );
     } else {
+      print(_response);
       var prefs = await SharedPreferences.getInstance();
       prefs.setString("userId", "1");
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => HomePage()),
-          (route) => false);
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(builder: (context) => HomePage()),
+      //     (route) => false);
+
     }
   }
 
@@ -183,12 +233,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   RoundedButton(
                     text: 'LOGIN',
+                    isLoading: _loading,
                     press: () {
-                      if (!_formKey.currentState.validate()) {
-                        return;
+                      if (!_loading) {
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+                        _formKey.currentState.save();
+                        login();
                       }
-                      _formKey.currentState.save();
-                      login();
                     },
                   ),
                 ],
