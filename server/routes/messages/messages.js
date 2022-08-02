@@ -1,5 +1,5 @@
 const {
-  getMessages, postMessages, updateMessages, getConversations
+  getMessages, postMessage, updateMessages, getConversations
 } = require("../../models/messages/messageModel");
 const Joi = require("@hapi/joi");
 
@@ -50,19 +50,27 @@ module.exports = [
     },
   },
   {
-    method: "PUT",
-    path: "/messages",
+    method: "POST",
+    path: "/sendMessage",
     options: {
-      auth: {
-        strategy: "authStrategy",
+      // auth: {
+      //   strategy: "authStrategy",
+      // },
+      validate: {
+        payload: Joi.object({
+          sender: Joi.number(),
+          receiver: Joi.number(),
+          content: Joi.string(),
+          date: Joi.string(),
+        }),
       },
-      description: "Post Messages List",
-      notes: "Post arrays or objects of messages",
+      description: "Get Conversation messages",
+      notes: "Gets a list of messages",
       tags: ["api"],
-      handler: async () => {
-        let posted = null;
-        posted = await updateMessages();
-        return posted;
+      handler: async (h) => {
+        let ls = null;
+        ls = await postMessage(h.payload);
+        return ls;
       },
     },
   },

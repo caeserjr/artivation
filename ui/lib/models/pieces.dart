@@ -1,28 +1,30 @@
 class ArtPiece {
-  String pName;
-  double price;
-  String pImg;
-  String pDesc;
-  String pDate;
-  String pArtist;
+  int price;
+  int pieceArtist;
+  int category;
+  String pieceName;
+  String pieceImage;
+  String pieceDesc;
+  String pieceDate;
 
   ArtPiece({
-    this.pName,
-    this.pDesc,
-    this.pImg,
+    this.pieceName,
+    this.pieceDesc,
+    this.pieceImage,
     this.price,
-    this.pArtist,
-    this.pDate,
+    this.pieceArtist,
+    this.pieceDate,
+    this.category,
   });
 
   factory ArtPiece.fromJSON(dynamic json) {
     return ArtPiece(
-      pName: json["pName"],
+      pieceName: json["pieceName"],
       price: json["price"],
-      pImg: json["pImg"],
-      pDesc: json["pDesc"],
-      pDate: json["pDate"],
-      pArtist: json["pArtist"],
+      pieceImage: json["pieceImage"],
+      pieceDesc: json["pieceDesc"],
+      pieceDate: json["pieceDate"],
+      pieceArtist: json["pieceArtist"],
     );
   }
 
@@ -53,23 +55,4 @@ List<String> titles = [
   'Gin-sama',
   'Eyelish Brown',
   'Justice League'
-];
-
-// ignore: unused_element
-List<ArtPiece> _featuredItems = [
-  ArtPiece(
-      pName: 'Lions',
-      price: 1000,
-      pImg:
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
-  ArtPiece(
-      pName: 'Lions',
-      price: 1000,
-      pImg:
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
-  ArtPiece(
-      pName: 'Lions',
-      price: 1000,
-      pImg:
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
 ];

@@ -10,6 +10,7 @@ const users = require("./routes/users/users");
 var auth = require("./routes/auth/auth");
 var accountDetails = require("./routes/account/account");
 const messages = require("./routes/messages/messages");
+const artPieces = require("./routes/artPieces/artPieces");
 
 const init = async () => {
   const server = new Hapi.Server({
@@ -68,6 +69,7 @@ const init = async () => {
   server.route(accountDetails);
   server.route(users);
   server.route(messages);
+  server.route(artPieces);
 
   await server.start();
 

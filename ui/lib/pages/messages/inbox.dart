@@ -1,10 +1,11 @@
 import 'package:Artivation/constants/constants.dart';
 import 'package:Artivation/handlers/error_responses.dart';
 import 'package:Artivation/models/messages.dart';
-import 'package:Artivation/screens/widgets/loading_container.dart';
 import 'package:Artivation/services/messages/messageApi.dart';
 import 'package:Artivation/widgets/app_text.dart';
-import 'package:Artivation/widgets/show_dialog.dart';
+import 'package:Artivation/widgets/empty_container.dart';
+import 'package:Artivation/widgets/error_page.dart';
+import 'package:Artivation/widgets/loading_container.dart';
 import 'package:flutter/material.dart';
 
 class Inbox extends StatefulWidget {
@@ -15,46 +16,17 @@ class Inbox extends StatefulWidget {
 }
 
 class _InboxState extends State<Inbox> {
-  bool _loading;
+  bool _loading, _error;
+  ErrorResponse occurredError;
   List<Message> chats;
 
   @override
   void initState() {
     _loading = false;
+    _error = false;
     chats = [];
     getInboxItems();
     super.initState();
-  }
-
-  void _showMessageDialog({
-    String message,
-    String severity,
-    dynamic positiveButtonCallback,
-    String positiveButtonText,
-    dynamic negativeButtonCallback,
-    String negativeButtonText,
-    String type,
-  }) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: MessageDialog(
-            message: message,
-            negativeButtonCallback: negativeButtonCallback,
-            negativeButtonText: negativeButtonText,
-            positiveButtonCallback: positiveButtonCallback,
-            positiveButtonText: positiveButtonText,
-            severity: severity,
-            type: "alert",
-          ),
-        );
-      },
-    ).then(
-      (val) {},
-    );
   }
 
   void getInboxItems() async {
@@ -75,25 +47,14 @@ class _InboxState extends State<Inbox> {
     });
 
     if (_response.runtimeType.toString() == "ErrorResponse") {
-      ErrorResponse _error = _response;
-      _showMessageDialog(
-        message: _error.message,
-        severity: "error",
-        type: "alert",
-        positiveButtonCallback: () {
-          Navigator.of(context).pop();
-        },
-        positiveButtonText: "OK",
-      );
+      setState(() {
+        _error = true;
+      });
+      occurredError = _response;
     } else {
       setState(() {
         chats = _response;
       });
-
-      // Navigator.of(context).pushAndRemoveUntil(
-      //     MaterialPageRoute(builder: (context) => HomePage()),
-      //     (route) => false);
-
     }
   }
 
@@ -101,42 +62,86 @@ class _InboxState extends State<Inbox> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: _loading
-            ? LoadingContainer()
-            : Container(
-                margin: EdgeInsets.only(top: 40),
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: chats.length,
-                  itemBuilder: ((_, index) {
-                    return InboxItem(
-                      sentBy: chats[index].senderName,
-                      msgPreview: chats[index].content,
-                      image: chats[index].senderImage,
-                      time: chats[index].date,
-                      unread: chats[index].unread,
-                      chatId: chats[index].chatId,
-                    );
-                  }),
+        // floatingActionButton: FloatingActionButton(
+        //   child: Icon(
+        //     Icons.message_rounded,
+        //     color: Constants.kPrimaryColor,
+        //   ),
+        //   backgroundColor: Color.fromARGB(255, 43, 52, 57),
+        //   onPressed: () {},
+        // ),
+        body: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 10, left: 10),
+                  height: 30,
+                  width: MediaQuery.of(context).size.width - 14,
+                  child: AppText(
+                    text: "Messages",
+                    isBold: true,
+                    size: 18,
+                  ),
                 ),
-              ),
+              ],
+            ),
+            Expanded(
+              child: _loading
+                  ? LoadingContainer()
+                  : _error
+                      ? ErrorPage(
+                          message: occurredError.message,
+                          action: () {
+                            setState(() {
+                              _error = false;
+                            });
+                            getInboxItems();
+                          },
+                        )
+                      : chats.length > 0
+                          ? Container(
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                itemCount: chats.length,
+                                itemBuilder: ((_, index) {
+                                  return InboxItem(
+                                    senderName: chats[index].senderName,
+                                    msgPreview: chats[index].content,
+                                    image: chats[index].senderImage,
+                                    time: chats[index].date,
+                                    unread: chats[index].unread,
+                                    chatId: chats[index].chatId,
+                                    senderId: chats[index].senderId,
+                                  );
+                                }),
+                              ),
+                            )
+                          : EmptyContainer(
+                              message: "No conversations found.",
+                              svgIcon: "assets/icons/noMessages.svg",
+                            ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class InboxItem extends StatefulWidget {
-  final String sentBy, msgPreview, image;
+  final String senderName, msgPreview, image;
   final bool unread;
   final String time;
-  final int chatId;
+  final int chatId, senderId;
 
   const InboxItem({
     Key key,
     this.msgPreview,
     this.chatId,
     this.image,
-    this.sentBy,
+    this.senderName,
+    this.senderId,
     this.time,
     this.unread = false,
   }) : super(key: key);
@@ -151,7 +156,12 @@ class _InboxItemState extends State<InboxItem> {
     return GestureDetector(
       onLongPress: () {},
       onTap: () {
-        Navigator.of(context).pushNamed("Messages", arguments: widget.chatId);
+        List<Object> _args = [];
+        _args.add(widget.chatId);
+        _args.add(widget.image);
+        _args.add(widget.senderName);
+        _args.add(widget.senderId);
+        Navigator.of(context).pushNamed("Messages", arguments: _args);
       },
       child: Container(
         height: 70,
@@ -200,7 +210,7 @@ class _InboxItemState extends State<InboxItem> {
                             width: MediaQuery.of(context).size.width - 90,
                             child: AppText(
                               size: 15,
-                              text: widget.sentBy,
+                              text: widget.senderName,
                               isBold: true,
                             ),
                           ),

@@ -1,8 +1,10 @@
+import 'package:Artivation/pages/explore/explore.dart';
 import 'package:Artivation/pages/login/login.dart';
 import 'package:Artivation/pages/messages/chat_screen.dart';
 import 'package:Artivation/pages/router.dart';
 import 'package:Artivation/pages/splash.dart';
 import 'package:Artivation/pages/welcome/welcome.dart';
+import 'package:Artivation/widgets/preview_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,10 +57,22 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) => HomePage(),
             );
+          case 'Explore':
+            return MaterialPageRoute(
+              builder: (context) => ExplorePage(),
+            );
+          case 'PreviewImage':
+            return MaterialPageRoute(
+              builder: (context) => PreviewImage(imageUrl: settings.arguments),
+            );
           case 'Messages':
+            List<Object> args = settings.arguments;
             return MaterialPageRoute(
               builder: (context) => ChatScreen(
-                chatId: settings.arguments,
+                chatId: args[0],
+                profileImg: args[1],
+                chatName: args[2],
+                chatWith: args[3],
               ),
             );
           default:

@@ -10,19 +10,19 @@ class BuildFeatured extends StatefulWidget {
 
 List<ArtPiece> _featuredItems = [
   ArtPiece(
-      pName: 'Lions',
+      pieceName: 'Lions',
       price: 1000,
-      pImg:
+      pieceImage:
           'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
   ArtPiece(
-      pName: 'Lions',
+      pieceName: 'Lions',
       price: 1000,
-      pImg:
+      pieceImage:
           'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
   ArtPiece(
-      pName: 'Lions',
+      pieceName: 'Lions',
       price: 1000,
-      pImg:
+      pieceImage:
           'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
 ];
 
@@ -71,8 +71,8 @@ class _BuildFeaturedState extends State<BuildFeatured> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.white,
                                 image: DecorationImage(
-                                  image:
-                                      NetworkImage(_featuredItems[index].pImg),
+                                  image: NetworkImage(
+                                      _featuredItems[index].pieceImage),
                                   fit: BoxFit.cover,
                                   //colorFilter: ColorFilter.mode(Colors.white.withOpacity(.4),BlendMode.lighten)
                                 )),

@@ -2,7 +2,7 @@ class Message {
   final int chatId;
   final String content;
   final String date;
-  final int sender;
+  final int senderId;
   final String senderName;
   final String senderImage;
   final bool unread;
@@ -12,7 +12,7 @@ class Message {
     this.senderImage,
     this.unread,
     this.content,
-    this.sender,
+    this.senderId,
     this.date,
     this.chatId,
   });
@@ -21,7 +21,7 @@ class Message {
     return Message(
       chatId: json["chatId"],
       content: json["content"],
-      sender: json["sender"],
+      senderId: json["senderId"],
       date: json["date"],
       unread: json["unread"],
       senderName: json["senderName"],

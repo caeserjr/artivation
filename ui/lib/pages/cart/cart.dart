@@ -1,5 +1,6 @@
 import 'package:Artivation/constants/constants.dart';
 import 'package:Artivation/pages/cart/cart_data.dart';
+import 'package:Artivation/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,7 +20,7 @@ class _FragmentCartState extends State<FragmentCart> {
         child: Stack(children: [
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(top: 44),
+              padding: const EdgeInsets.only(top: 40),
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 itemCount: cartItems.length,
@@ -31,11 +32,14 @@ class _FragmentCartState extends State<FragmentCart> {
                       color: Color(0xFFFFE6E6),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        SvgPicture.asset('assets/icons/Trash.svg'),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          SvgPicture.asset('assets/icons/Trash.svg'),
+                        ],
+                      ),
                     ),
                   ),
                   onDismissed: (direction) {
@@ -53,36 +57,63 @@ class _FragmentCartState extends State<FragmentCart> {
           ),
           SafeArea(
             child: Container(
-              color: Colors.black.withOpacity(0.3),
               height: 44,
-              child: Padding(
-                padding: const EdgeInsets.all(4),
-                child: Row(
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        Icons.chevron_left_rounded,
-                        size: Constants.iconSize,
-                        color: Colors.white,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: AppText(
+                              text: "Cart ",
+                              isBold: true,
+                              size: 18,
+                            ),
+                          ),
+                          Container(
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "${cartItems.length} ",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(
+                                    text: "items",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ),
         ]),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        height: 80,
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
+        height: 65,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
           boxShadow: [
             BoxShadow(
                 offset: Offset(0, -14),
@@ -93,27 +124,39 @@ class _FragmentCartState extends State<FragmentCart> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text.rich(
-              TextSpan(text: 'Total: \n', children: [
-                TextSpan(
-                  text: '\$12000',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                )
-              ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text.rich(
+                  TextSpan(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    text: 'Total ',
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: '\$12000',
+                  ),
+                ),
+              ],
             ),
             SizedBox(
-              width: 190,
-              child: SizedBox(
-                height: 35,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Checkout'.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+              width: 170,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
                   ),
+                ),
+                child: Text(
+                  'Checkout'.toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ),

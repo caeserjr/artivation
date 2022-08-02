@@ -13,30 +13,31 @@ class ArtDetails extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       color: Colors.black.withOpacity(0.3),
       child: SafeArea(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+                icon: Icon(
+                  Icons.chevron_left_rounded,
+                  color: Colors.white,
+                  size: Constants.iconSize + 5,
+                ),
+                onPressed: () => Navigator.pop(context)),
+            IconButton(
               icon: Icon(
-                Icons.chevron_left_rounded,
+                Icons.shopping_bag_outlined,
                 color: Colors.white,
-                size: Constants.iconSize + 5,
+                size: Constants.iconSize,
               ),
-              onPressed: () => Navigator.pop(context)),
-          IconButton(
-            icon: Icon(
-              Icons.shopping_bag_outlined,
-              color: Colors.white,
-              size: Constants.iconSize,
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FragmentCart(),
+                ));
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => FragmentCart(),
-              ));
-            },
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 

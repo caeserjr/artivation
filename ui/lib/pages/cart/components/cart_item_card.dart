@@ -14,7 +14,7 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Container(
         width: size.width,
         child: Row(
@@ -51,18 +51,13 @@ class CartItemCard extends StatelessWidget {
                   width: 60,
                   child: Text.rich(
                     TextSpan(
-                        text: ' \$${cart.product.price}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.redAccent,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: ' x${cart.numOfItems} ',
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                        ]),
+                      text: ' \$${cart.product.price}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -1,24 +1,31 @@
 import 'package:Artivation/constants/constants.dart';
 import 'package:Artivation/handlers/error_responses.dart';
 import 'package:Artivation/models/messages.dart';
-import 'package:Artivation/screens/widgets/empty_container.dart';
-import 'package:Artivation/screens/widgets/loading_container.dart';
 import 'package:Artivation/services/messages/messageApi.dart';
+import 'package:Artivation/widgets/app_text.dart';
 import 'package:Artivation/widgets/chat_bubble.dart';
+import 'package:Artivation/widgets/empty_container.dart';
+import 'package:Artivation/widgets/error_page.dart';
+import 'package:Artivation/widgets/loading_container.dart';
 import 'package:Artivation/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
-  final int chatId;
-  const ChatScreen({Key key, this.chatId}) : super(key: key);
+  final int chatId, chatWith;
+  final String chatName, profileImg;
+
+  const ChatScreen(
+      {Key key, this.chatId, this.chatName, this.profileImg, this.chatWith})
+      : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String messageContent;
   List<Message> messages;
 
   void _showMessageDialog({
@@ -50,27 +57,65 @@ class _ChatScreenState extends State<ChatScreen> {
     ).then((val) {});
   }
 
-  bool _loading;
+  bool _loading, _error;
   bool dataLoaded;
+  ErrorResponse occurredError;
 
   void initState() {
-    getChatMessages(widget.chatId);
+    getChatMessages();
+    _error = false;
     _loading = false;
-    dataLoaded = false;
+    messages = [];
+    messageContent = "";
     super.initState();
   }
 
-  void getChatMessages(chatId) async {
+  void getChatMessages() async {
+    setState(() {
+      _loading = true;
+    });
     var _response = await MessagesApi.getMessages(
       payload: {
-        "chatId": chatId,
+        "chatId": widget.chatId,
         // "userId": storage.getString("userId"),
       },
     );
 
-    setState(() {
-      _loading = false;
-    });
+    if (_response.runtimeType.toString() == "ErrorResponse") {
+      occurredError = _response;
+
+      _showMessageDialog(
+        message: _response.message,
+        severity: "error",
+        type: "alert",
+        positiveButtonCallback: () {
+          Navigator.of(context).pop();
+        },
+        positiveButtonText: "OK",
+      );
+      setState(() {
+        _loading = false;
+        _error = true;
+      });
+    } else {
+      setState(() {
+        messages = _response;
+        _loading = false;
+      });
+    }
+  }
+
+  void sendMessage() async {
+    var _response = await MessagesApi.sendMessage(
+      payload: {
+        //! add sender as logged in user
+        "sender": 1,
+        "content": messageContent,
+        "receiver": widget.chatWith,
+        "date": DateTime.now().toString()
+        // "userId": storage.getString("userId"),
+      },
+    );
 
     if (_response.runtimeType.toString() == "ErrorResponse") {
       ErrorResponse _error = _response;
@@ -84,10 +129,7 @@ class _ChatScreenState extends State<ChatScreen> {
         positiveButtonText: "OK",
       );
     } else {
-      setState(() {
-        dataLoaded = true;
-        messages = _response;
-      });
+      print("server returned ${_response}");
 
       // Navigator.of(context).pushAndRemoveUntil(
       //     MaterialPageRoute(builder: (context) => HomePage()),
@@ -102,15 +144,57 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Scaffold(
       body: Column(
         children: [
-          Container(
-            height: 50,
-            child: Text("AppBar Here"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.chevron_left_rounded,
+                      color: Colors.black,
+                      size: Constants.iconSize + 5,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 5),
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(widget.profileImg),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 15),
+                    child: AppText(
+                      text: widget.chatName,
+                      isBold: true,
+                      size: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           Expanded(
             child: _loading
                 ? LoadingContainer()
-                : dataLoaded
-                    ? Container(
+                : _error
+                    ? ErrorPage(
+                        message: occurredError.message,
+                        action: () {
+                          setState(() {
+                            _error = false;
+                          });
+                          getChatMessages();
+                        },
+                      )
+                    : Container(
                         width: double.maxFinite,
                         color: Color.fromARGB(173, 248, 246, 241),
                         child: GroupedListView<Message, DateTime>(
@@ -168,11 +252,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           itemBuilder: (context, Message message) => ChatBubble(
                             content: message.content,
                             //! if logged in user is me
-                            isSender: message.sender == 1 ? true : false,
+                            isSender: message.senderId == 1 ? true : false,
                           ),
                         ),
-                      )
-                    : EmptyContainer(message: "No messages found."),
+                      ),
           ),
           Container(
             height: 50,
@@ -188,7 +271,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
                             setState(() {
-                              //! add message by inputController
+                              //! add emoji by inputController
                               // return messages.add(message);
                             });
                           },
@@ -213,17 +296,13 @@ class _ChatScreenState extends State<ChatScreen> {
                               hintText: "Type message",
                               border: InputBorder.none,
                             ),
-                            onSubmitted: (text) {
-                              final message = Message(
-                                content: text,
-                                date: DateTime.now().toString(),
-                              );
-
-                              if (text != "") {
-                                setState(() {
-                                  return messages.add(message);
-                                });
-                              }
+                            onEditingComplete: () {
+                              if (messageContent != "") sendMessage();
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                messageContent = value;
+                              });
                             },
                           ),
                         ),
@@ -232,7 +311,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
                             setState(() {
-                              //! add message by inputController
+                              //! add attach_file by inputController
                               // return messages.add(message);
                             });
                           },
@@ -279,10 +358,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           splashColor: Constants.kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(100),
                           onTap: () {
-                            setState(() {
-                              //! add message by inputController
-                              // return messages.add(message);
-                            });
+                            if (messageContent != "") sendMessage();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),

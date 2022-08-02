@@ -1,3 +1,4 @@
+import 'package:Artivation/pages/explore/explore.dart';
 import 'package:Artivation/pages/home.dart';
 import 'package:Artivation/pages/cart/cart.dart';
 import 'package:Artivation/pages/messages/inbox.dart';
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         return FragHome();
         break;
       case 1:
-        return LoginPage();
+        return ExplorePage();
         break;
       case 2:
         return Inbox();

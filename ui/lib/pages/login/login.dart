@@ -10,11 +10,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool isLocked;
-  void initState() {
-    super.initState();
-    isLocked = true;
-  }
+  var ctime;
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +23,18 @@ class _LoginState extends State<Login> {
   }
 
   Future<bool> willPop() async {
-    if (!isLocked) {
-      Navigator.of(context).popUntil((route) => false);
-      return true;
-    } else {
-      setState(() {
-        isLocked = false;
-      });
-      Timer(Duration(seconds: 3), () {
-        setState(() {
-          isLocked = true;
-        });
-      });
-      Fluttertoast.showToast(
-          msg: 'One more click to exit.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green.withOpacity(.8),
-          textColor: Colors.white,
-          fontSize: 16);
-      return false;
+    DateTime now = DateTime.now();
+    if (ctime == null || now.difference(ctime) > Duration(seconds: 2)) {
+      //add duration of press gap
+      ctime = now;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Press Back Button Again to Exit'),
+        ),
+      ); //scaffold message, you can show Toast message too.
+      return Future.value(false);
     }
+
+    return Future.value(true);
   }
 }
