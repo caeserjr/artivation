@@ -1,8 +1,8 @@
-class Users {
+class User {
   int userId, phoneNumber;
   String userName, firstName, lastName, middleName, imageUrl;
 
-  Users({
+  User({
     this.userId,
     this.phoneNumber,
     this.userName,
@@ -12,8 +12,8 @@ class Users {
     this.imageUrl,
   });
 
-  factory Users.fromJSON(Map<String, dynamic> json) {
-    return Users(
+  factory User.fromJSON(Map<String, dynamic> json) {
+    return User(
       userId: json["userId"],
       phoneNumber: json["phoneNumber"],
       userName: json["userName"],

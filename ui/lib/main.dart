@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             );
           case 'PreviewImage':
             return MaterialPageRoute(
-              builder: (context) => PreviewImage(imageUrl: settings.arguments),
+              builder: (context) => PreviewImage(piece: settings.arguments),
             );
           case 'Messages':
             List<Object> args = settings.arguments;

@@ -37,7 +37,7 @@ const getArtPieces = async () => {
         "pieceImage": "assets/pieces/3.jpg",
         "pieceDesc": "Shinra Kusakabe",
         "pieceDate": moment().subtract(7, "months").format("YYYY-MM-DD HH:mm:ss").toString(),
-        "pieceArtist": 2,
+        "pieceArtist": 3,
         "category": 2,
       },
       {
@@ -55,7 +55,7 @@ const getArtPieces = async () => {
         "pieceImage": "assets/pieces/4.jpg",
         "pieceDesc": "Complete Squad 8",
         "pieceDate": moment().subtract(2, "months").format("YYYY-MM-DD HH:mm:ss").toString(),
-        "pieceArtist": 2,
+        "pieceArtist": 4,
         "category": 4
       },
       {
@@ -64,7 +64,7 @@ const getArtPieces = async () => {
         "pieceImage": "assets/pieces/5.jpg",
         "pieceDesc": "Suicide Squad Boku no hero",
         "pieceDate": moment().subtract(1, "years").format("YYYY-MM-DD HH:mm:ss").toString(),
-        "pieceArtist": 2,
+        "pieceArtist": 5,
         "category": 1
       },
       {
@@ -73,7 +73,7 @@ const getArtPieces = async () => {
         "pieceImage": "assets/pieces/6.jpg",
         "pieceDesc": "Gintama taking a stroll",
         "pieceDate": moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss").toString(),
-        "pieceArtist": 2,
+        "pieceArtist": 1,
         "category": 2
       },
 
@@ -83,7 +83,7 @@ const getArtPieces = async () => {
         "pieceImage": "assets/pieces/7.jpg",
         "pieceDesc": "Shadowy Character",
         "pieceDate": moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss").toString(),
-        "pieceArtist": 2,
+        "pieceArtist": 4,
         "category": 5
       },
       {
@@ -92,7 +92,7 @@ const getArtPieces = async () => {
         "pieceImage": "assets/pieces/8.jpg",
         "pieceDesc": "The Justice League",
         "pieceDate": moment().subtract(15, "days").format("YYYY-MM-DD HH:mm:ss").toString(),
-        "pieceArtist": 2,
+        "pieceArtist": 5,
         "category": 4
       },
     ])

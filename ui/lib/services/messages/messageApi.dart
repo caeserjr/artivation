@@ -4,7 +4,6 @@ import 'package:Artivation/config/config.dart';
 import 'package:Artivation/handlers/error_responses.dart';
 import 'package:Artivation/models/messages.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class MessagesApi {
   static dynamic getConversations({payload}) async {

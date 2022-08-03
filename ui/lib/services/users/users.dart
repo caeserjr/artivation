@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class UserApi {
   static dynamic getUsers({payload}) async {
-    List<Users> _userList = [];
+    List<User> _userList = [];
     final _uri = Uri.http(
       base_url,
       'users',
@@ -32,7 +32,7 @@ class UserApi {
       var resultJSON = jsonDecode(response.body);
       if (resultJSON["status"] == "success") {
         Iterable items = resultJSON["data"];
-        _userList = items.map((item) => Users.fromJSON(item)).toList();
+        _userList = items.map((item) => User.fromJSON(item)).toList();
         return _userList;
       } else {
         return ErrorResponse(

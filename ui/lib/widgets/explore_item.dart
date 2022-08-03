@@ -15,7 +15,7 @@ class _ExploreItemState extends State<ExploreItem> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed("PreviewImage", arguments: widget.piece.pieceImage);
+            .pushNamed("PreviewImage", arguments: widget.piece);
       },
       child: Container(
         alignment: Alignment.bottomLeft,

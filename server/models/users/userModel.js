@@ -1,59 +1,18 @@
 
 const { error } = require("@hapi/joi/lib/base");
 const config = require("../../config/config");
-const { successMessage, errorMessage } = require("../../lib/constants/common");
+const { successMessage, errorMessage, userData } = require("../../lib/constants/common");
 const Logger = require("../logger/logger");
 
 
-const getUser = async () => {
+const getUsers = async ({ userId }) => {
   try {
-    if (true) {
-      return successMessage([{
-        userId: 1,
-        firstName: "Ghalib",
-        middleName: "A",
-        lastName: "Ali",
-        imageUrl: "assets/pieces/8.jpg",
-        phoneNumber: 0712160406,
-        userName: "caeserjr"
-      }, {
-        userId: 2,
-        firstName: "Saida",
-        middleName: "A",
-        lastName: "Mzee",
-        imageUrl: "assets/pieces/4.jpg",
-        phoneNumber: 0712160406,
-        userName: "sambaseif",
-      }
-        , {
-        userId: 3,
-        firstName: "Salhiya",
-        middleName: "G",
-        lastName: "Ali",
-        imageUrl: "assets/pieces/7.jpg",
-        phoneNumber: 0712160406,
-        userName: "naggato",
-      }
-        , {
-        userId: 4,
-        firstName: "Naruto",
-        middleName: "J",
-        lastName: "Uzumaki",
-        imageUrl: "assets/pieces/6.jpg",
-        phoneNumber: 0712160406,
-        userName: "jiraiya",
-      }, {
-        userId: 4,
-        firstName: "Ogata",
-        middleName: "S",
-        lastName: "Hiroyuki",
-        imageUrl: "assets/pieces/1.jpg",
-        phoneNumber: 0712160406,
-        userName: "jiraiya",
-      }
-      ])
+    if (userId) {
+      let user = userData.find(user => parseInt(user.userId) === parseInt(userId));
+      return successMessage([user]);
     } else {
-      return errorMessage("No users found.")
+      //! get all users
+      return successMessage(userData);
     }
   } catch (error) {
     return errorMessage(`An error occurred.`);
@@ -80,4 +39,4 @@ const updateUser = async () => {
   }
 }
 
-module.exports = { getUser, postUser, updateUser };
+module.exports = { getUsers, postUser, updateUser };

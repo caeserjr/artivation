@@ -4,7 +4,8 @@ import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 
 class LoadingContainer extends StatefulWidget {
-  const LoadingContainer({Key key}) : super(key: key);
+  final double size;
+  const LoadingContainer({Key key, this.size = 40}) : super(key: key);
 
   @override
   State<LoadingContainer> createState() => _LoadingContainerState();
@@ -20,7 +21,7 @@ class _LoadingContainerState extends State<LoadingContainer> {
         child: Center(
           child: Loading(
             indicator: BallSpinFadeLoaderIndicator(),
-            size: 40.0,
+            size: widget.size,
             color: Constants.kPrimaryColor,
           ),
         ),

@@ -4,7 +4,7 @@ const {
 
 module.exports = [
   {
-    method: "GET",
+    method: "POST",
     path: "/users",
     options: {
       // auth: {
@@ -13,16 +13,16 @@ module.exports = [
       description: "Get User List",
       notes: "Gets a list of users",
       tags: ["api"],
-      handler: async () => {
+      handler: async (h) => {
         let ls = null;
-        ls = await getUsers();
+        ls = await getUsers(h.payload);
         return ls;
       },
     },
   },
   {
     method: "POST",
-    path: "/users",
+    path: "/users/add",
     options: {
       auth: {
         strategy: "authStrategy",
