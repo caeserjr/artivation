@@ -11,22 +11,33 @@ import 'package:Artivation/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatScreen extends StatefulWidget {
   final int chatId, chatWith;
   final String chatName, profileImg;
 
-  const ChatScreen(
-      {Key key, this.chatId, this.chatName, this.profileImg, this.chatWith})
-      : super(key: key);
+  const ChatScreen({
+    Key key,
+    this.chatId,
+    this.chatName,
+    this.profileImg,
+    this.chatWith,
+  }) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  String messageContent;
+  String messageContent, currentUser;
+  bool _loading, _error;
+  bool dataLoaded;
+
   List<Message> messages;
+
+  ErrorResponse occurredError;
+  SharedPreferences prefs;
 
   void _showMessageDialog({
     String message,
@@ -57,17 +68,21 @@ class _ChatScreenState extends State<ChatScreen> {
     ).then((val) {});
   }
 
-  bool _loading, _error;
-  bool dataLoaded;
-  ErrorResponse occurredError;
-
   void initState() {
     getChatMessages();
     _error = false;
     _loading = false;
     messages = [];
     messageContent = "";
+    initiatePreferences();
     super.initState();
+  }
+
+  void initiatePreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      currentUser = prefs.getString("currentUser");
+    });
   }
 
   void getChatMessages() async {
@@ -77,7 +92,6 @@ class _ChatScreenState extends State<ChatScreen> {
     var _response = await MessagesApi.getMessages(
       payload: {
         "chatId": widget.chatId,
-        // "userId": storage.getString("userId"),
       },
     );
 
@@ -251,8 +265,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           itemBuilder: (context, Message message) => ChatBubble(
                             content: message.content,
-                            //! if logged in user is me
-                            isSender: message.senderId == 1 ? true : false,
+                            isSender: message.senderId.toString() ==
+                                    currentUser.toString()
+                                ? true
+                                : false,
                           ),
                         ),
                       ),

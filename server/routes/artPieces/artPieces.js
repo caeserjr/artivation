@@ -1,6 +1,6 @@
 
 const Joi = require("@hapi/joi");
-const { getArtPieces, postArtPiece } = require("../../models/artPieces/artPieceModel");
+const { getArtPieces, postArtPiece, checkLikeStatus } = require("../../models/artPieces/artPieceModel");
 
 
 module.exports = [
@@ -47,6 +47,29 @@ module.exports = [
       handler: async (h) => {
         let ls = null;
         ls = await postArtPiece(h.payload);
+        return ls;
+      },
+    },
+  },
+  {
+    method: "POST",
+    path: "/checkLikeStatus",
+    options: {
+      // auth: {
+      //   strategy: "authStrategy",
+      // },
+      validate: {
+        payload: Joi.object({
+          userId: Joi.string(),
+          pieceId: Joi.string(),
+        }),
+      },
+      description: "Check if the user has liked the piece",
+      notes: "Returns like status",
+      tags: ["api"],
+      handler: async (h) => {
+        let ls = null;
+        ls = await checkLikeStatus(h.payload);
         return ls;
       },
     },

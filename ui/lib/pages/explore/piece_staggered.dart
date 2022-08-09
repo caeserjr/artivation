@@ -45,7 +45,6 @@ class _PieceStaggeredState extends State<PieceStaggered> {
       });
       occurredError = _response;
     } else {
-      print('FRONTEND ${_response}');
       setState(() {
         pieces = _response;
       });
@@ -68,25 +67,25 @@ class _PieceStaggeredState extends State<PieceStaggered> {
                 getExploreItems();
               },
             )
-          : _loading
-              ? LoadingContainer()
-              : pieces.isNotEmpty
-                  ? SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      child: MasonryView(
-                        listOfItem: pieces,
-                        numberOfColumn: 2,
-                        itemPadding: 5,
-                        itemBuilder: (item) {
-                          return ExploreItem(
-                            piece: item,
-                          );
-                        },
-                      ),
-                    )
-                  : EmptyContainer(
-                      message: "No items found.",
-                    ),
+          : (pieces.length <= 0 && _loading != true)
+              ? EmptyContainer(
+                  message: "No items found.",
+                )
+              : SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: MasonryView(
+                    listOfItem: pieces,
+                    numberOfColumn: 2,
+                    itemPadding: 5,
+                    itemBuilder: (item) {
+                      return _loading
+                          ? LoadingContainer(type: "explore")
+                          : ExploreItem(
+                              piece: item,
+                            );
+                    },
+                  ),
+                ),
     );
   }
 }

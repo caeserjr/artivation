@@ -1,3 +1,4 @@
+import 'package:Artivation/pages/cart/buy_now.dart';
 import 'package:Artivation/pages/explore/explore.dart';
 import 'package:Artivation/pages/login/login.dart';
 import 'package:Artivation/pages/messages/chat_screen.dart';
@@ -64,6 +65,10 @@ class MyApp extends StatelessWidget {
           case 'PreviewImage':
             return MaterialPageRoute(
               builder: (context) => PreviewImage(piece: settings.arguments),
+            );
+          case 'BuyNow':
+            return MaterialPageRoute(
+              builder: (context) => BuyNow(piece: settings.arguments),
             );
           case 'Messages':
             List<Object> args = settings.arguments;

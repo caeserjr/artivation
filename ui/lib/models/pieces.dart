@@ -2,12 +2,14 @@ class ArtPiece {
   int price;
   int pieceArtist;
   int category;
+  int pieceId;
   String pieceName;
   String pieceImage;
   String pieceDesc;
   String pieceDate;
 
   ArtPiece({
+    this.pieceId,
     this.pieceName,
     this.pieceDesc,
     this.pieceImage,
@@ -19,6 +21,7 @@ class ArtPiece {
 
   factory ArtPiece.fromJSON(dynamic json) {
     return ArtPiece(
+      pieceId: json["pieceId"],
       pieceName: json["pieceName"],
       price: json["price"],
       pieceImage: json["pieceImage"],

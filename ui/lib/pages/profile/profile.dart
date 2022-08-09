@@ -1,15 +1,15 @@
+import 'package:Artivation/models/users.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class ArtistProfile extends StatefulWidget {
-  const ArtistProfile({Key key}) : super(key: key);
+class UserProfile extends StatefulWidget {
+  final User currentUser;
+  const UserProfile({Key key, this.currentUser}) : super(key: key);
 
   @override
-  State<ArtistProfile> createState() => _ArtistProfileState();
+  State<UserProfile> createState() => _UserProfileState();
 }
 
-class _ArtistProfileState extends State<ArtistProfile> {
+class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _ArtistProfileState extends State<ArtistProfile> {
             width: 35,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/pieces/1.jpg"),
+                image: AssetImage(widget.currentUser.imageUrl),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(100),

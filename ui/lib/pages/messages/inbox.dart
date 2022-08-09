@@ -7,6 +7,7 @@ import 'package:Artivation/widgets/empty_container.dart';
 import 'package:Artivation/widgets/error_page.dart';
 import 'package:Artivation/widgets/loading_container.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Inbox extends StatefulWidget {
   const Inbox({Key key}) : super(key: key);
@@ -19,6 +20,7 @@ class _InboxState extends State<Inbox> {
   bool _loading, _error;
   ErrorResponse occurredError;
   List<Message> chats;
+  SharedPreferences prefs;
 
   @override
   void initState() {
@@ -30,15 +32,14 @@ class _InboxState extends State<Inbox> {
   }
 
   void getInboxItems() async {
-    // var storage = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     setState(() {
       _loading = true;
     });
 
     var _response = await MessagesApi.getConversations(
       payload: {
-        "userId": 1,
-        // "userId": storage.getString("userId"),
+        "userId": prefs.getString("currentUser"),
       },
     );
 

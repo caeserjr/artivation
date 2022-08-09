@@ -62,9 +62,10 @@ class DetailBody extends StatelessWidget {
                               Text(
                                 product.title,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 23,
-                                    color: Colors.black),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 23,
+                                  color: Colors.black,
+                                ),
                               ),
                             ],
                           ),
@@ -74,46 +75,57 @@ class DetailBody extends StatelessWidget {
                         width: size.width * .2,
                         child: RichText(
                           text: TextSpan(
-                              style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 13),
-                              children: [
-                                TextSpan(
-                                  text: 'Dimensions\n',
-                                ),
-                                TextSpan(
-                                    text: '${product.dim}' +
-                                        " x " +
-                                        '${product.dim}' +
-                                        ' cm')
-                              ]),
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Dimensions\n',
+                              ),
+                              TextSpan(
+                                text: '${product.dim}' +
+                                    " x " +
+                                    '${product.dim}' +
+                                    ' cm',
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Container(
                         width: size.width * .2,
                         child: RichText(
                           text: TextSpan(
-                              style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 13),
-                              children: [
-                                TextSpan(
-                                  text: 'Price\n',
-                                ),
-                                TextSpan(
-                                    text: '${product.price} ',
-                                    style: TextStyle(fontSize: 18)),
-                                TextSpan(
-                                    text: "\$", style: TextStyle(fontSize: 18))
-                              ]),
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Price\n',
+                              ),
+                              TextSpan(
+                                text: '${product.price} ',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              TextSpan(
+                                text: "\$",
+                                style: TextStyle(fontSize: 18),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                   Expanded(
-                    child: Description(size: size, product: product),
+                    child: Description(
+                      size: size,
+                      product: product,
+                    ),
                   ),
                   CountWithFavBtn(),
                   AddToCart(),

@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController pass = TextEditingController();
   bool _obscureText;
   bool _loading;
+  SharedPreferences prefs;
 
   @override
   void initState() {
@@ -33,6 +34,12 @@ class _LoginPageState extends State<LoginPage> {
     password = "";
     _loading = false;
     _obscureText = true;
+    initiateSharePreferences();
+  }
+
+  void initiateSharePreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.setString("currentUser", "1");
   }
 
   @override
@@ -97,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       print(_response);
       var prefs = await SharedPreferences.getInstance();
-      prefs.setString("userId", "1");
+      prefs.setString("currentUser", "1");
       // Navigator.of(context).pushAndRemoveUntil(
       //     MaterialPageRoute(builder: (context) => HomePage()),
       //     (route) => false);
