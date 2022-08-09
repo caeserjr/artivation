@@ -43,18 +43,16 @@ class _InboxState extends State<Inbox> {
       },
     );
 
-    setState(() {
-      _loading = false;
-    });
-
     if (_response.runtimeType.toString() == "ErrorResponse") {
       setState(() {
         _error = true;
+        _loading = false;
       });
       occurredError = _response;
     } else {
       setState(() {
         chats = _response;
+        _loading = false;
       });
     }
   }
