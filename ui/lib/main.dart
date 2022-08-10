@@ -2,9 +2,11 @@ import 'package:Artivation/pages/cart/buy_now.dart';
 import 'package:Artivation/pages/explore/explore.dart';
 import 'package:Artivation/pages/login/login.dart';
 import 'package:Artivation/pages/messages/chat_screen.dart';
+import 'package:Artivation/pages/profile/profile.dart';
 import 'package:Artivation/pages/router.dart';
 import 'package:Artivation/pages/splash.dart';
 import 'package:Artivation/pages/welcome/welcome.dart';
+import 'package:Artivation/screens/settings.dart';
 import 'package:Artivation/widgets/preview_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -61,6 +63,14 @@ class MyApp extends StatelessWidget {
           case 'Explore':
             return MaterialPageRoute(
               builder: (context) => ExplorePage(),
+            );
+          case 'UserProfile':
+            return MaterialPageRoute(
+              builder: (context) => UserProfile(user: settings.arguments),
+            );
+          case 'UserSettings':
+            return MaterialPageRoute(
+              builder: (context) => UserSettings(user: settings.arguments),
             );
           case 'PreviewImage':
             return MaterialPageRoute(

@@ -1,17 +1,22 @@
 import 'package:Artivation/constants/custom_dialog_box.dart';
+import 'package:Artivation/models/users.dart';
 import 'package:Artivation/screens/components/profileCard.dart';
 import 'package:flutter/material.dart';
 
-class UserProfile extends StatefulWidget {
+class UserSettings extends StatefulWidget {
+  final User user;
+
+  const UserSettings({Key key, this.user}) : super(key: key);
+
   @override
-  _UserProfileState createState() => _UserProfileState();
+  _UserSettingsState createState() => _UserSettingsState();
 }
 
 var date = DateTime.now().toString();
 var dateParse = DateTime.parse(date);
 var _year;
 
-class _UserProfileState extends State<UserProfile> {
+class _UserSettingsState extends State<UserSettings> {
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -43,19 +48,20 @@ class _UserProfileState extends State<UserProfile> {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    spreadRadius: 5,
-                                    color: Colors.black.withOpacity(.3),
-                                    blurRadius: 10,
-                                    offset: Offset(0, 3)),
-                              ],
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('assets/pieces/1.jpg'),
-                              ),
-                              border: Border.all(width: 2),
-                              shape: BoxShape.circle),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 5,
+                                  color: Colors.black.withOpacity(.3),
+                                  blurRadius: 10,
+                                  offset: Offset(0, 3)),
+                            ],
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(widget.user.imageUrl),
+                            ),
+                            border: Border.all(width: 2),
+                            shape: BoxShape.circle,
+                          ),
                         ),
                         Positioned(
                           bottom: 0,
@@ -64,11 +70,14 @@ class _UserProfileState extends State<UserProfile> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                                color: Colors.lightBlue[100],
-                                shape: BoxShape.circle,
-                                border:
-                                    Border.all(width: 2, color: Colors.white)),
-                            child: Icon(Icons.edit, color: Colors.white),
+                              color: Colors.lightBlue[100],
+                              shape: BoxShape.circle,
+                              border: Border.all(width: 2, color: Colors.white),
+                            ),
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -95,7 +104,11 @@ class _UserProfileState extends State<UserProfile> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Full Name',
+                                widget.user.firstName +
+                                    " " +
+                                    widget.user.middleName +
+                                    " " +
+                                    widget.user.lastName,
                                 style: TextStyle(fontSize: 16),
                               )
                             ],
@@ -108,43 +121,23 @@ class _UserProfileState extends State<UserProfile> {
                       color: Color(0xFF8B938D).withOpacity(.4),
                     ),
                     InkWell(
-                        onTap: () {},
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Email',
-                                  style: TextStyle(fontSize: 16),
-                                )
-                              ],
-                            ),
+                      onTap: () {},
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.user.email,
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
                           ),
-                        )),
-                    Container(
-                      height: 1,
-                      color: Color(0xFF8B938D).withOpacity(.4),
+                        ),
+                      ),
                     ),
-                    InkWell(
-                        onTap: () {},
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4, vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Gender',
-                                  style: TextStyle(fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ),
-                        )),
                     Container(
                       height: 1,
                       color: Color(0xFF8B938D).withOpacity(.4),

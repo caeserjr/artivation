@@ -7,7 +7,8 @@ const userData = [{
   lastName: "Ali",
   imageUrl: "assets/pieces/8.jpg",
   phoneNumber: 0712160406,
-  userName: "caeserjr"
+  userName: "caeserjr",
+  email: "caeserjr@gmail.com"
 }, {
   userId: 2,
   firstName: "Saida",
@@ -16,6 +17,8 @@ const userData = [{
   imageUrl: "assets/pieces/4.jpg",
   phoneNumber: 0712160406,
   userName: "sambaseif",
+  email: "sambaseif12@gmail.com"
+
 }, {
   userId: 3,
   firstName: "Salhiya",
@@ -23,6 +26,7 @@ const userData = [{
   lastName: "Ali",
   imageUrl: "assets/pieces/7.jpg",
   phoneNumber: 0712160406,
+  email: "naggato@gmail.com",
   userName: "naggato",
 }, {
   userId: 4,
@@ -31,7 +35,9 @@ const userData = [{
   lastName: "Uzumaki",
   imageUrl: "assets/pieces/6.jpg",
   phoneNumber: 0712160406,
-  userName: "jiraiya",
+  userName: "naruto",
+  email: "naruto@gmail.com"
+
 }, {
   userId: 5,
   firstName: "Ogata",
@@ -40,14 +46,17 @@ const userData = [{
   imageUrl: "assets/pieces/1.jpg",
   phoneNumber: 0712160406,
   userName: "jiraiya",
+  email: "jiraiya@gmail.com"
+
 }, {
   userId: 5,
-  firstName: "Jinjuriki",
-  middleName: "S",
-  lastName: "Ten",
+  firstName: "Sasuke",
+  middleName: "yA",
+  lastName: "Uchiha",
   imageUrl: "assets/pieces/6.jpg",
   phoneNumber: 0712160406,
-  userName: "jiraiya",
+  email: "sasuke@gmail.com",
+  userName: "sasuke",
 }
 ]
 

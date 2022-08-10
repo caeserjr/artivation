@@ -117,19 +117,27 @@ class _PreviewImageState extends State<PreviewImage> {
                           )
                         : Row(
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 5),
-                                height: 55,
-                                width: 55,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      artist?.imageUrl ??
-                                          "assets/icons/user.png",
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    "UserProfile",
+                                    arguments: artist,
+                                  );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 5),
+                                  height: 55,
+                                  width: 55,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        artist?.imageUrl ??
+                                            "assets/icons/user.png",
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    fit: BoxFit.cover,
+                                    borderRadius: BorderRadius.circular(100),
                                   ),
-                                  borderRadius: BorderRadius.circular(100),
                                 ),
                               ),
                               Column(
@@ -223,19 +231,20 @@ class _PreviewImageState extends State<PreviewImage> {
                                                               text:
                                                                   "TZS ${widget.piece.price}",
                                                               isBold: true,
-                                                              size: 24,
+                                                              size: 22,
                                                             ),
                                                           )
                                                         ],
                                                       ),
                                                       Container(
+                                                        color: Colors.white24,
                                                         padding:
                                                             EdgeInsets.only(
                                                           left: 10,
                                                         ),
                                                         alignment:
                                                             Alignment.topLeft,
-                                                        height: 150,
+                                                        height: 130,
                                                         child: Flexible(
                                                           child: Text(
                                                             widget.piece
@@ -252,8 +261,6 @@ class _PreviewImageState extends State<PreviewImage> {
                                                         ),
                                                       ),
                                                       Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: 30),
                                                         child: Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment

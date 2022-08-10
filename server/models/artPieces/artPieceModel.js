@@ -127,10 +127,9 @@ const checkLikeStatus = async ({ pieceId }) => {
     if (pieceId === "2" || pieceId === "1" || pieceId === "4" || pieceId === "5") {
       return successMessage(true)
     }
-    return errorMessage(false);
-
+    return successMessage(false);
   } catch (error) {
-    return errorMessage(false);
+    return errorMessage("An error occurred while checking the status");
   }
 }
 

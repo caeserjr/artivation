@@ -7,6 +7,7 @@ import 'package:Artivation/widgets/empty_container.dart';
 import 'package:Artivation/widgets/error_page.dart';
 import 'package:Artivation/widgets/loading_container.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Inbox extends StatefulWidget {
@@ -31,7 +32,7 @@ class _InboxState extends State<Inbox> {
     super.initState();
   }
 
-  void getInboxItems() async {
+  Future<void> getInboxItems() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       _loading = true;
@@ -100,20 +101,27 @@ class _InboxState extends State<Inbox> {
                         )
                       : chats.length > 0
                           ? Container(
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                itemCount: chats.length,
-                                itemBuilder: ((_, index) {
-                                  return InboxItem(
-                                    senderName: chats[index].senderName,
-                                    msgPreview: chats[index].content,
-                                    image: chats[index].senderImage,
-                                    time: chats[index].date,
-                                    unread: chats[index].unread,
-                                    chatId: chats[index].chatId,
-                                    senderId: chats[index].senderId,
-                                  );
-                                }),
+                              child: LiquidPullToRefresh(
+                                height: 150,
+                                color: Color.fromARGB(72, 204, 219, 215),
+                                showChildOpacityTransition: false,
+                                backgroundColor: Constants.kPrimaryLightColor,
+                                onRefresh: getInboxItems,
+                                child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount: chats.length,
+                                  itemBuilder: ((_, index) {
+                                    return InboxItem(
+                                      senderName: chats[index].senderName,
+                                      msgPreview: chats[index].content,
+                                      image: chats[index].senderImage,
+                                      time: chats[index].date,
+                                      unread: chats[index].unread,
+                                      chatId: chats[index].chatId,
+                                      senderId: chats[index].senderId,
+                                    );
+                                  }),
+                                ),
                               ),
                             )
                           : EmptyContainer(

@@ -1,11 +1,12 @@
 class User {
   int userId, phoneNumber;
-  String userName, firstName, lastName, middleName, imageUrl;
+  String userName, firstName, email, lastName, middleName, imageUrl;
 
   User({
     this.userId,
     this.phoneNumber,
     this.userName,
+    this.email,
     this.firstName,
     this.lastName,
     this.middleName,
@@ -17,6 +18,7 @@ class User {
       userId: json["userId"],
       phoneNumber: json["phoneNumber"],
       userName: json["userName"],
+      email: json["email"],
       firstName: json["firstName"],
       lastName: json["lastName"],
       middleName: json["middleName"],

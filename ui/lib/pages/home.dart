@@ -2,7 +2,7 @@ import 'package:Artivation/constants/constants.dart';
 import 'package:Artivation/models/product.dart';
 import 'package:Artivation/pages/cart/cart.dart';
 import 'package:Artivation/screens/piece_details.dart';
-import 'package:Artivation/screens/myprofile.dart';
+import 'package:Artivation/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -88,7 +88,7 @@ class _ViewPageState extends State<FragHome> {
                   ),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => UserProfile(),
+                      builder: (context) => UserSettings(),
                     ));
                   },
                 )

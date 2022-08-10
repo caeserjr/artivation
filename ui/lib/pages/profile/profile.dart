@@ -2,8 +2,8 @@ import 'package:Artivation/models/users.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatefulWidget {
-  final User currentUser;
-  const UserProfile({Key key, this.currentUser}) : super(key: key);
+  final User user;
+  const UserProfile({Key key, this.user}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -21,7 +21,7 @@ class _UserProfileState extends State<UserProfile> {
             width: 35,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(widget.currentUser.imageUrl),
+                image: AssetImage(widget.user.imageUrl),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(100),
