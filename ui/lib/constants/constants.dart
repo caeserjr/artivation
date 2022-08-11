@@ -11,6 +11,8 @@ class Constants {
   static const kDpadding = 20;
   static const Color colorText = Color.fromARGB(255, 88, 88, 88);
 
+  static const double borderRadius = 22;
+
   static const double fontSmall = 12;
   static const double fontMedium = 20;
   static const double fontLarge = 30;

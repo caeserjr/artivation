@@ -4,9 +4,7 @@ import 'package:Artivation/pages/cart/cart.dart';
 import 'package:Artivation/pages/messages/inbox.dart';
 import 'package:Artivation/pages/profile/profile.dart';
 import 'package:Artivation/screens/index.dart';
-import 'package:Artivation/screens/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:Artivation/pages/login/body.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import "package:Artivation/constants/theme.dart";
 

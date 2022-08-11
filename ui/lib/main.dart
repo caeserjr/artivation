@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+    //     overlays: [SystemUiOverlay.top]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
@@ -39,9 +39,10 @@ class MyApp extends StatelessWidget {
       },
       title: 'Artivation',
       theme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          scaffoldBackgroundColor: Colors.white),
-      home: Splash(),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: HomePage(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case 'Welcome':

@@ -147,16 +147,20 @@ class _FragmentCartState extends State<FragmentCart> {
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    Constants.kPrimaryColor,
                   ),
                 ),
                 child: Text(
                   'Checkout'.toUpperCase(),
                   style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

@@ -9,8 +9,8 @@ class AppText extends StatelessWidget {
 
   AppText({
     Key key,
-    this.size,
-    this.text,
+    @required this.size,
+    @required this.text,
     this.color = Colors.black,
     this.isBold = false,
   }) : super(key: key);

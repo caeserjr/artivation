@@ -6,6 +6,7 @@ import 'package:Artivation/services/pieces/piecesApi.dart';
 import 'package:Artivation/services/users/users.dart';
 import 'package:Artivation/widgets/app_text.dart';
 import 'package:Artivation/widgets/loading_container.dart';
+import 'package:Artivation/widgets/simple_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -226,26 +227,23 @@ class _PreviewImageState extends State<PreviewImage> {
                                                               left: 10,
                                                               top: 20,
                                                             ),
-                                                            height: 50,
                                                             child: AppText(
                                                               text:
                                                                   "TZS ${widget.piece.price}",
                                                               isBold: true,
                                                               size: 22,
+                                                              color: Colors
+                                                                  .grey[700],
                                                             ),
                                                           )
                                                         ],
                                                       ),
-                                                      Container(
-                                                        color: Colors.white24,
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          left: 10,
-                                                        ),
-                                                        alignment:
-                                                            Alignment.topLeft,
-                                                        height: 130,
-                                                        child: Flexible(
+                                                      Expanded(
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(8),
+                                                          alignment:
+                                                              Alignment.topLeft,
                                                           child: Text(
                                                             widget.piece
                                                                 .pieceDesc,
@@ -266,85 +264,94 @@ class _PreviewImageState extends State<PreviewImage> {
                                                               MainAxisAlignment
                                                                   .spaceEvenly,
                                                           children: [
-                                                            IconButton(
-                                                              onPressed: () {},
-                                                              icon: Icon(
-                                                                Icons
-                                                                    .message_rounded,
-                                                              ),
-                                                            ),
-                                                            ElevatedButton(
-                                                              onPressed: () {},
-                                                              style:
-                                                                  ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty
-                                                                        .all<
-                                                                            Color>(
-                                                                  Constants
-                                                                      .kPrimaryColor
-                                                                      .withOpacity(
-                                                                    .9,
+                                                            SizedBox(
+                                                              width:
+                                                                  size.width *
+                                                                      .4,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed:
+                                                                    () {},
+                                                                style:
+                                                                    ButtonStyle(
+                                                                  backgroundColor:
+                                                                      MaterialStateProperty
+                                                                          .all<
+                                                                              Color>(
+                                                                    Constants
+                                                                        .kPrimaryColor
+                                                                        .withOpacity(
+                                                                      .9,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                shape: MaterialStateProperty
-                                                                    .all<
-                                                                        RoundedRectangleBorder>(
-                                                                  RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                      15.0,
+                                                                  shape: MaterialStateProperty
+                                                                      .all<
+                                                                          RoundedRectangleBorder>(
+                                                                    RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        12.0,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              child: Text(
-                                                                'Add To Cart',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            ElevatedButton(
-                                                              onPressed: () {},
-                                                              style:
-                                                                  ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty
-                                                                        .all<
-                                                                            Color>(
-                                                                  Constants
-                                                                      .kPrimaryColor,
-                                                                ),
-                                                                shape: MaterialStateProperty
-                                                                    .all<
-                                                                        RoundedRectangleBorder>(
-                                                                  RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                      15.0,
-                                                                    ),
+                                                                child: Text(
+                                                                  'Add To Cart',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              child: Text(
-                                                                'Buy Now',
+                                                            ),
+                                                            SizedBox(
+                                                              width:
+                                                                  size.width *
+                                                                      .4,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed:
+                                                                    () {},
                                                                 style:
-                                                                    TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .white,
+                                                                    ButtonStyle(
+                                                                  backgroundColor:
+                                                                      MaterialStateProperty
+                                                                          .all<
+                                                                              Color>(
+                                                                    Constants
+                                                                        .kPrimaryColor,
+                                                                  ),
+                                                                  shape: MaterialStateProperty
+                                                                      .all<
+                                                                          RoundedRectangleBorder>(
+                                                                    RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        12.0,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                child: Text(
+                                                                  'Buy Now',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -390,27 +397,7 @@ class _PreviewImageState extends State<PreviewImage> {
                 ),
               ),
               SafeArea(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(.4),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.chevron_left_rounded,
-                            color: Colors.white,
-                            size: Constants.iconSize + 5,
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                child: SimpleNavBar(),
               ),
             ],
           ),

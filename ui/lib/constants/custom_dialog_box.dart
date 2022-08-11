@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'dart:ui';
 import 'package:Artivation/constants/constants.dart';
+import 'package:Artivation/handlers/error_responses.dart';
+import 'package:Artivation/services/auth/authApi.dart';
+import 'package:Artivation/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 
 class CustomDialogBox extends StatefulWidget {
   final Image img;
@@ -24,9 +24,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     super.dispose();
   }
 
-  String _oldpassword, _password, flag, _token;
+  ErrorResponse occurredError;
+
+  String _oldPassword, _password, flag, _token;
   bool _obscureText = true;
   bool _obscureText1 = true;
+  bool _loading, _error = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -42,50 +45,47 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     );
   }
 
-  Future changePass() async {
-    String server = Constants.server;
-    var map = Map();
-    map['flag'] = "changePass";
-    map['fcm_token'] = _token;
-    map['password'] = _password;
-    map['oldpassword'] = _oldpassword;
-    map['email'] = "ghalib14@gmail.com";
+  Future<void> changePass() async {
+    setState(() {
+      _loading = true;
+    });
 
-    var _header = {'Content-Type': 'application/json;charset=UTF-8'};
-    var _body = jsonEncode(map);
-    var response = await http.post(Uri.http(server, "/artivation/admin.php"),
-        headers: _header, body: _body);
+    var _response = await AuthApi.changePassword(
+      payload: {
+        "oldPassword": _oldPassword,
+        "newPassword": _password
+        // "userId": storage.getString("userId"),
+      },
+    );
 
-    print(response.body);
-
-    if (response.body == 'error') {
+    if (_response.runtimeType.toString() == "ErrorResponse") {
+      setState(() {
+        _error = true;
+      });
+      occurredError = _response;
       Fluttertoast.showToast(
-          msg: 'Failed to change password, try again.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red.withOpacity(.8),
-          textColor: Colors.white,
-          fontSize: 16);
-    } else if (response.body == 'wpass') {
+        msg: 'Failed to change password, try again.',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red.withOpacity(.8),
+        textColor: Colors.white,
+        fontSize: 16,
+      );
+    } else {
       Fluttertoast.showToast(
-          msg: 'Failed to verify current password.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red.withOpacity(.8),
-          textColor: Colors.white,
-          fontSize: 16);
-    } else if (response.body == 'success') {
-      Fluttertoast.showToast(
-          msg: 'Password changed successfully.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green.withOpacity(.8),
-          textColor: Colors.white,
-          fontSize: 16);
+        msg: 'Password changed successfully.',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green.withOpacity(.8),
+        textColor: Colors.white,
+        fontSize: 16,
+      );
     }
+    setState(() {
+      _loading = false;
+    });
   }
 
   contentBox(context) {
@@ -95,7 +95,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
       ),
-      padding: EdgeInsets.symmetric(vertical: 10),
       child: SingleChildScrollView(
         child: Container(
           height: size.height * .25,
@@ -104,131 +103,158 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    Container(
-                      width: size.width * .7,
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: Expanded(
-                        child: TextFormField(
-                          controller: pass,
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                            hintText: 'Old Password',
-                            icon: Icon(Icons.lock, size: 21),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscureText
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                size: 21,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: size.width * .7,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          child: Expanded(
+                            child: TextFormField(
+                              controller: pass,
+                              obscureText: _obscureText,
+                              decoration: InputDecoration(
+                                hintText: 'Old Password',
+                                icon: Icon(Icons.lock, size: 21),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    size: 21,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
+                                ),
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
+                              keyboardType: TextInputType.visiblePassword,
+                              // ignore: missing_return
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Old password required";
+                                }
+                                if (value.length < 5) {
+                                  Fluttertoast.showToast(
+                                    msg:
+                                        'Password character count should be more than 5.',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.TOP,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor:
+                                        Colors.green.withOpacity(.8),
+                                    textColor: Colors.white,
+                                    fontSize: 14,
+                                  );
+                                  // return 'Password character count should be more than 5';
+                                }
+                              },
+                              onSaved: (String value) {
+                                _oldPassword = value;
                               },
                             ),
                           ),
-                          keyboardType: TextInputType.visiblePassword,
-                          // ignore: missing_return
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              return "Old password required";
-                            }
-                            if (value.length < 5) {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      'Password character count should be more than 5.',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.green.withOpacity(.8),
-                                  textColor: Colors.white,
-                                  fontSize: 14);
-                              // return 'Password character count should be more than 5';
-                            }
-                          },
-                          onSaved: (String value) {
-                            _oldpassword = value;
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: size.width * .7,
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: Expanded(
-                        child: TextFormField(
-                          controller: pass2,
-                          obscureText: _obscureText1,
-                          decoration: InputDecoration(
-                            hintText: 'New Password',
-                            icon: Icon(Icons.lock, size: 21),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscureText1
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                size: 21,
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: size.width * .7,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          child: Expanded(
+                            child: TextFormField(
+                              controller: pass2,
+                              obscureText: _obscureText1,
+                              decoration: InputDecoration(
+                                hintText: 'New Password',
+                                icon: Icon(Icons.lock, size: 21),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureText1
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    size: 21,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscureText1 = !_obscureText1;
+                                    });
+                                  },
+                                ),
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscureText1 = !_obscureText1;
-                                });
+                              keyboardType: TextInputType.visiblePassword,
+                              // ignore: missing_return
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "New password required.";
+                                }
+                                if (value.length < 5) {
+                                  Fluttertoast.showToast(
+                                    msg:
+                                        'Password character count should be more than 5.',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.TOP,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor:
+                                        Colors.green.withOpacity(.8),
+                                    textColor: Colors.white,
+                                    fontSize: 14,
+                                  );
+                                }
+                              },
+                              onSaved: (String value) {
+                                _password = value;
                               },
                             ),
                           ),
-                          keyboardType: TextInputType.visiblePassword,
-                          // ignore: missing_return
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              return "New password required.";
-                            }
-                            if (value.length < 5) {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      'Password character count should be more than 5.',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.green.withOpacity(.8),
-                                  textColor: Colors.white,
-                                  fontSize: 14);
-                            }
-                          },
-                          onSaved: (String value) {
-                            _password = value;
-                          },
-                        ),
-                      ),
-                    )
+                        )
+                      ],
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: FlatButton(
-                          onPressed: () {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            } else {
-                              _formKey.currentState.save();
-                              changePass();
-                            }
-                          },
-                          child: Text(
-                            'Change Password',
-                            style: TextStyle(fontSize: 18),
-                          )),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          } else {
+                            _formKey.currentState.save();
+                            changePass();
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Constants.kPrimaryColor,
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                12.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        child: AppText(
+                          text: 'Change Password',
+                          size: 14,
+                          isBold: true,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ],
                 ),
