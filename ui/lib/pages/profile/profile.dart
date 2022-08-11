@@ -2,7 +2,6 @@ import 'package:Artivation/constants/constants.dart';
 import 'package:Artivation/models/users.dart';
 import 'package:Artivation/widgets/app_text.dart';
 import 'package:Artivation/widgets/profile_item.dart';
-import 'package:Artivation/widgets/simple_nav.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatefulWidget {
@@ -19,15 +18,15 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       body: Column(
         children: [
+          //! tidal design
           ClipRRect(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(105),
-              bottomRight: Radius.circular(-15),
             ),
             child: Container(
               padding: EdgeInsets.all(25),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 139, 185, 205),
+                color: Constants.kPrimaryLightColor,
               ),
               child: Column(
                 children: [
@@ -171,7 +170,9 @@ class _UserProfileState extends State<UserProfile> {
               physics: BouncingScrollPhysics(),
               children: [
                 ProfileCardItem(
-                  action: () {},
+                  action: () {
+                    print("1");
+                  },
                   color: Colors.green,
                   title: "My Orders",
                   cardIcon: Icons.shopping_bag_outlined,

@@ -46,8 +46,8 @@ class _InboxState extends State<Inbox> {
 
     if (_response.runtimeType.toString() == "ErrorResponse") {
       setState(() {
-        _error = true;
         _loading = false;
+        _error = true;
       });
       occurredError = _response;
     } else {
@@ -79,7 +79,7 @@ class _InboxState extends State<Inbox> {
                   height: 30,
                   width: MediaQuery.of(context).size.width - 14,
                   child: AppText(
-                    text: "Messages",
+                    text: "Chat",
                     isBold: true,
                     size: 18,
                   ),

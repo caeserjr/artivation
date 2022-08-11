@@ -51,11 +51,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     });
 
     var _response = await AuthApi.changePassword(
-      payload: {
-        "oldPassword": _oldPassword,
-        "newPassword": _password
-        // "userId": storage.getString("userId"),
-      },
+      payload: {"oldPassword": _oldPassword, "newPassword": _password},
     );
 
     if (_response.runtimeType.toString() == "ErrorResponse") {

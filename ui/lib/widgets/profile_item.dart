@@ -21,9 +21,7 @@ class ProfileCardItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
-          print("object");
-        },
+        onTap: action,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

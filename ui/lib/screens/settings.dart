@@ -303,12 +303,19 @@ class _UserSettingsState extends State<UserSettings> {
                         width: size.width * .99,
                         padding:
                             EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          color: Constants.kPrimaryLightColor,
+                        child: ElevatedButton(
                           onPressed: () {},
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Constants.kPrimaryColor,
+                            ),
+                          ),
                           child: Text(
                             'sign out'.toUpperCase(),
                             style: TextStyle(
