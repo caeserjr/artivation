@@ -15,18 +15,18 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
         children: [
           //! tidal design
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(105),
-            ),
+          ClipPath(
+            clipper: WaveClipper(),
             child: Container(
+              height: size.height * .4,
               padding: EdgeInsets.all(25),
               decoration: BoxDecoration(
-                color: Constants.kPrimaryLightColor,
+                color: Color.fromARGB(255, 139, 185, 205),
               ),
               child: Column(
                 children: [
@@ -156,7 +156,11 @@ class _UserProfileState extends State<UserProfile> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 15, bottom: 5),
+                padding: const EdgeInsets.only(
+                  top: 15.0,
+                  left: 15,
+                  bottom: 5,
+                ),
                 child: AppText(
                   size: 20,
                   isBold: true,
@@ -201,5 +205,45 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
     );
+  }
+}
+
+class WaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    debugPrint(size.width.toString());
+    var path = new Path();
+    path.lineTo(0, size.height - 80);
+    var firstStart = Offset(size.width / 5, size.height - 15);
+
+    var firstEnd = Offset(size.width / 2.5, size.height - 50);
+
+    path.quadraticBezierTo(
+      firstStart.dx,
+      firstStart.dy,
+      firstEnd.dx,
+      firstEnd.dy,
+    );
+
+    var secondStart = Offset(
+      size.width - (size.width / 3.24),
+      size.height - 105,
+    );
+
+    var secondEnd = Offset(size.width, size.height - 10);
+    path.quadraticBezierTo(
+      secondStart.dx,
+      secondStart.dy,
+      secondEnd.dx,
+      secondEnd.dy,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
