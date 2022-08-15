@@ -121,7 +121,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20, 
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
