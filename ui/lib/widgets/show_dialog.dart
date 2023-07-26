@@ -2,18 +2,17 @@ import 'package:Artivation/screens/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 class MessageDialog extends StatelessWidget {
-  final String severity;
-  final String type;
-  final String message;
+  final String severity, type, message;
   final double height;
   final dynamic positiveButtonCallback;
   final String positiveButtonText;
   final String negativeButtonText;
   final dynamic negativeButtonCallback;
+
   const MessageDialog({
-    Key key,
-    this.type,
-    this.message,
+    Key? key,
+    this.type = "",
+    this.message = "",
     this.height = 200,
     this.severity = "info",
     this.positiveButtonCallback,

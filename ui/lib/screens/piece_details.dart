@@ -30,9 +30,11 @@ class ArtDetails extends StatelessWidget {
                 size: Constants.iconSize,
               ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => FragmentCart(),
-                ));
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => FragmentCart(),
+                  ),
+                );
               },
             ),
           ],
@@ -41,7 +43,10 @@ class ArtDetails extends StatelessWidget {
     );
   }
 
-  const ArtDetails({Key key, this.product}) : super(key: key);
+  const ArtDetails({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,11 +54,14 @@ class ArtDetails extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: FractionalOffset.topLeft,
-              end: FractionalOffset.bottomRight,
-              colors: [Color(0xffE9E7E6), Color(0xffD4E4EA)]),
+            begin: FractionalOffset.topLeft,
+            end: FractionalOffset.bottomRight,
+            colors: [Color(0xffE9E7E6), Color(0xffD4E4EA)],
+          ),
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
         ),
         child: Stack(children: [
           DetailBody(

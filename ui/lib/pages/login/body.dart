@@ -20,25 +20,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email, password;
+  String? email, password;
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
-  bool _obscureText;
-  bool _loading;
-  SharedPreferences prefs;
+  bool _obscureText = true;
+  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
     email = "";
     password = "";
-    _loading = false;
-    _obscureText = true;
     initiateSharePreferences();
   }
 
   void initiateSharePreferences() async {
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("currentUser", "1");
   }
 
@@ -50,13 +47,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showMessageDialog({
-    String message,
-    String severity,
+    String message = "",
+    String severity = "",
     dynamic positiveButtonCallback,
-    String positiveButtonText,
+    String positiveButtonText = "Yes",
     dynamic negativeButtonCallback,
-    String negativeButtonText,
-    String type,
+    String negativeButtonText = "No",
+    String type = "warning",
   }) async {
     await showDialog(
       context: context,
@@ -91,9 +88,9 @@ class _LoginPageState extends State<LoginPage> {
       _loading = false;
     });
     if (_response.runtimeType.toString() == "ErrorResponse") {
-      ErrorResponse _error = _response;
+      ErrorResponse? _error = _response;
       _showMessageDialog(
-        message: _error.message,
+        message: _error!.message!,
         severity: "error",
         type: "alert",
         positiveButtonCallback: () {
@@ -108,7 +105,6 @@ class _LoginPageState extends State<LoginPage> {
       // Navigator.of(context).pushAndRemoveUntil(
       //     MaterialPageRoute(builder: (context) => HomePage()),
       //     (route) => false);
-
     }
   }
 
@@ -120,8 +116,8 @@ class _LoginPageState extends State<LoginPage> {
         border: InputBorder.none,
         icon: Icon(Icons.person, size: 21),
       ),
-      validator: (String value) {
-        if (value.trim().isEmpty) {
+      validator: (String? value) {
+        if (value!.trim().isEmpty) {
           return 'Email required';
         }
 
@@ -133,8 +129,8 @@ class _LoginPageState extends State<LoginPage> {
         // validator has to return something :)
         return null;
       },
-      onSaved: (String value) {
-        email = value;
+      onSaved: (String? value) {
+        email = value!;
       },
     );
   }
@@ -161,8 +157,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
       keyboardType: TextInputType.visiblePassword,
       // ignore: missing_return
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value!.isEmpty) {
           return 'Password required';
         }
         if (value.length < 5) {
@@ -177,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
           // return 'Password character count should be more than 5';
         }
       },
-      onSaved: (String value) {
+      onSaved: (String? value) {
         password = value;
       },
     );
@@ -243,10 +239,10 @@ class _LoginPageState extends State<LoginPage> {
                     isLoading: _loading,
                     press: () {
                       if (!_loading) {
-                        if (!_formKey.currentState.validate()) {
+                        if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        _formKey.currentState.save();
+                        _formKey.currentState!.save();
                         login();
                       }
                     },

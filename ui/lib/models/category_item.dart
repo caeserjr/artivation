@@ -4,16 +4,22 @@ class CategoryItem {
   String categoryName;
   IconData icon;
 
-  CategoryItem({this.categoryName, this.icon});
+  CategoryItem({
+    required this.categoryName,
+    required this.icon,
+  });
 
-  CategoryItem.fromJSON(Map<String, dynamic> json) {
-    this.categoryName = json['categoryName'];
-    switch (json['categoryName']) {
-      case 'Music':
-      case 'music':
-        this.icon = Icons.music_note;
-        break;
-      default:
-    }
+  CategoryItem.fromJSON(Map<String, dynamic> json)
+      : this.categoryName = json['categoryName'],
+        this.icon = _getCategoryIcon(json['categoryName']);
+}
+
+IconData _getCategoryIcon(String categoryName) {
+  switch (categoryName) {
+    case 'Music':
+    case 'music':
+      return Icons.music_note;
+    default:
+      return Icons.adb;
   }
 }

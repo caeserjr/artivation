@@ -15,30 +15,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   //state variables
-  int _selectedPage;
+  int _selectedPage = 0;
 
   void initState() {
     super.initState();
-    _selectedPage = 0;
   }
 
   Widget _fragmentBuilder() {
     switch (_selectedPage) {
       case 0:
         return FragHome();
-        break;
       case 1:
         return ExplorePage();
-        break;
       case 2:
         return Inbox();
-        break;
       case 3:
         return FragmentCart();
-        break;
       case 4:
         return UserProfile();
-        break;
       default:
         return FragmentIndex();
     }

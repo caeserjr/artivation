@@ -1,6 +1,6 @@
 class User {
-  int userId, phoneNumber;
-  String userName, firstName, email, lastName, middleName, imageUrl;
+  int? userId, phoneNumber;
+  String? userName, firstName, email, lastName, middleName, imageUrl;
 
   User({
     this.userId,

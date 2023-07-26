@@ -8,7 +8,7 @@ class FragmentIndex extends StatefulWidget {
 }
 
 class _FragmentIndexState extends State<FragmentIndex> {
-  String _offerString;
+  String? _offerString;
   List<CategoryItem> _listCategories = [
     CategoryItem(categoryName: 'Music', icon: Icons.music_note),
     CategoryItem(categoryName: 'Art', icon: Icons.color_lens),
@@ -19,20 +19,38 @@ class _FragmentIndexState extends State<FragmentIndex> {
 
   List<ArtPiece> _featuredItems = [
     ArtPiece(
-        pieceName: 'Lions',
-        price: 1000,
-        pieceImage:
-            'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
+      pieceId: 001,
+      pieceDesc: "Lion Image",
+      pieceArtist: 001,
+      pieceDate: "24-07-2023",
+      pieceName: 'Lions',
+      category: 1,
+      price: 1000,
+      pieceImage:
+          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+    ),
     ArtPiece(
-        pieceName: 'Lions',
-        price: 1000,
-        pieceImage:
-            'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
+      pieceId: 002,
+      pieceDesc: "Lion Image 2",
+      pieceArtist: 001,
+      pieceDate: "24-07-2023",
+      pieceName: 'Lions',
+      category: 1,
+      price: 1000,
+      pieceImage:
+          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+    ),
     ArtPiece(
-        pieceName: 'Lions',
-        price: 1000,
-        pieceImage:
-            'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
+      pieceId: 003,
+      pieceDesc: "Lion Image",
+      pieceArtist: 001,
+      pieceDate: "24-07-2023",
+      pieceName: 'Lions',
+      category: 1,
+      price: 1000,
+      pieceImage:
+          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+    ),
   ];
 
   void initState() {

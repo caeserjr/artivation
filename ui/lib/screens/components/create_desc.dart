@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class Description extends StatelessWidget {
   const Description({
-    Key key,
-    @required this.size,
-    @required this.product,
+    Key? key,
+    required this.size,
+    required this.product,
   }) : super(key: key);
 
   final Size size;
@@ -22,7 +22,7 @@ class Description extends StatelessWidget {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Text(
-              product.desc,
+              product.desc!,
               style: TextStyle(),
             ),
           ),

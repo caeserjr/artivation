@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AddToCart extends StatelessWidget {
   const AddToCart({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -20,30 +19,43 @@ class AddToCart extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: Color(0xff7C9FDF)
-              )
+                color: Color(0xff7C9FDF),
+              ),
             ),
             child: IconButton(
               icon: SvgPicture.asset('assets/icons/add_to_cart.svg'),
-              onPressed: (){},
+              onPressed: () {},
             ),
           ),
           Expanded(
             child: SizedBox(
               height: 50,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                color: Color(0xff7C9FDF),
+              child: ElevatedButton(
                 onPressed: () {},
                 child: Text(
                   'Buy Now'.toUpperCase(),
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white
+                    color: Colors.white,
                   ),
+                ),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Color.fromARGB(255, 191, 203, 225);
+                    } else if (states.contains(MaterialState.disabled)) {
+                      return Color.fromARGB(255, 178, 183, 194);
+                    } else {
+                      return Color(0xff7C9FDF);
+                    }
+                  }),
                 ),
               ),
             ),
@@ -53,4 +65,3 @@ class AddToCart extends StatelessWidget {
     );
   }
 }
-

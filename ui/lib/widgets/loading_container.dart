@@ -2,15 +2,15 @@ import 'package:Artivation/widgets/shimmer.dart';
 import 'package:flutter/material.dart';
 
 class LoadingContainer extends StatefulWidget {
-  final double size, height, width;
+  final double? size, height, width;
   final int itemCount;
   final String type;
   const LoadingContainer({
-    Key key,
+    Key? key,
     this.size = 40,
-    this.height,
+    this.height = 40,
     this.width,
-    this.type,
+    this.type = "profile",
     this.itemCount = 10,
   }) : super(key: key);
 

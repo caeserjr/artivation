@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 class ProfileCardItem extends StatelessWidget {
   final IconData cardIcon;
   final String title;
-  final Function action;
+  final dynamic action;
   final Color color;
 
   const ProfileCardItem({
-    Key key,
-    @required this.cardIcon,
-    @required this.title,
-    @required this.action,
-    @required this.color,
+    Key? key,
+    required this.cardIcon,
+    required this.title,
+    required this.action,
+    required this.color,
   }) : super(key: key);
 
   @override

@@ -16,8 +16,8 @@ class Body extends StatefulWidget {
   final Widget child;
 
   const Body({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String _email, _password, _token, _fname, _lname, flag;
+  String? _email, _password, _token, _fname, _lname, flag;
 
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
@@ -51,15 +51,15 @@ class _BodyState extends State<Body> {
             size: 21,
           ),
           border: InputBorder.none),
-      validator: (String value) {
-        if (value.trim().isEmpty) {
+      validator: (String? value) {
+        if (value!.trim().isEmpty) {
           return 'Enter First Name';
         }
 
         // validator has to return something :)
         return null;
       },
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _fname = value;
       },
     );
@@ -75,14 +75,14 @@ class _BodyState extends State<Body> {
             size: 21,
           ),
           border: InputBorder.none),
-      validator: (String value) {
-        if (value.trim().isEmpty) {
+      validator: (String? value) {
+        if (value!.trim().isEmpty) {
           return 'Last Name required.';
         }
         // validator has to return something :)
         return null;
       },
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _lname = value;
       },
     );
@@ -98,8 +98,8 @@ class _BodyState extends State<Body> {
             size: 21,
           ),
           border: InputBorder.none),
-      validator: (String value) {
-        if (value.trim().isEmpty) {
+      validator: (String? value) {
+        if (value!.trim().isEmpty) {
           return 'Email required';
         }
 
@@ -112,7 +112,7 @@ class _BodyState extends State<Body> {
         // validator has to return something :)
         return null;
       },
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _email = value;
       },
     );
@@ -140,15 +140,15 @@ class _BodyState extends State<Body> {
       ),
       keyboardType: TextInputType.visiblePassword,
       // ignore: missing_return
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value!.isEmpty) {
           return 'Password required';
         }
         if (value.length < 6) {
           return 'Password character count should be more than 6';
         }
       },
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _password = value;
       },
     );
@@ -158,9 +158,9 @@ class _BodyState extends State<Body> {
     String server = Constants.server;
     var map = Map();
     map['flag'] = "reg";
-    map['fname'] = _fname.trim();
-    map['lname'] = _lname.trim();
-    map['email'] = _email.trim();
+    map['fname'] = _fname!.trim();
+    map['lname'] = _lname!.trim();
+    map['email'] = _email!.trim();
     map['password'] = _password;
 
     var _header = {'Content-Type': 'application/json;charset=UTF-8'};
@@ -242,10 +242,10 @@ class _BodyState extends State<Body> {
                     RoundedButton(
                       text: 'SIGNUP',
                       press: () {
-                        if (!_formKey.currentState.validate()) {
+                        if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        _formKey.currentState.save();
+                        _formKey.currentState!.save();
                         flag = '2';
                         _token = 'token';
                         register();

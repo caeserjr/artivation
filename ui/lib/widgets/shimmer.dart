@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerEffect extends StatelessWidget {
-  final double width, height;
+  final double? width, height;
   final ShapeBorder shapeBorder;
 
   const ShimmerEffect.rectangular({
@@ -20,8 +20,8 @@ class ShimmerEffect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[400],
-      highlightColor: Colors.grey[300],
+      baseColor: Colors.grey.shade400,
+      highlightColor: Colors.grey.shade300,
       period: Duration(seconds: 3),
       child: Container(
         width: width,

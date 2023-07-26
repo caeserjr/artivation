@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class Account extends StatelessWidget {
   final bool login;
-  final Function press;
+  final dynamic press;
 
   const Account({
-    Key key,
+    Key? key,
     this.login = true,
-    this.press,
+    required this.press,
   }) : super(key: key);
 
   @override

@@ -2,7 +2,7 @@ import 'package:Artivation/models/pieces.dart';
 import 'package:flutter/material.dart';
 
 class BuildFeatured extends StatefulWidget {
-  const BuildFeatured({Key key}) : super(key: key);
+  const BuildFeatured({Key? key}) : super(key: key);
 
   @override
   State<BuildFeatured> createState() => _BuildFeaturedState();
@@ -10,20 +10,38 @@ class BuildFeatured extends StatefulWidget {
 
 List<ArtPiece> _featuredItems = [
   ArtPiece(
-      pieceName: 'Lions',
-      price: 1000,
-      pieceImage:
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
+    pieceId: 001,
+    pieceName: 'Lions',
+    pieceDesc: "Lion Image",
+    pieceArtist: 001,
+    pieceDate: "24-07-2023",
+    category: 1,
+    price: 1000,
+    pieceImage:
+        'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+  ),
   ArtPiece(
-      pieceName: 'Lions',
-      price: 1000,
-      pieceImage:
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
+    pieceId: 001,
+    pieceName: 'Lions',
+    pieceDesc: "Lion Image",
+    pieceArtist: 001,
+    pieceDate: "24-07-2023",
+    category: 1,
+    price: 1000,
+    pieceImage:
+        'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+  ),
   ArtPiece(
-      pieceName: 'Lions',
-      price: 1000,
-      pieceImage:
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'),
+    pieceId: 001,
+    pieceName: 'Lions',
+    pieceDesc: "Lion Image",
+    pieceArtist: 001,
+    pieceDate: "24-07-2023",
+    category: 1,
+    price: 1000,
+    pieceImage:
+        'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+  ),
 ];
 
 class _BuildFeaturedState extends State<BuildFeatured> {

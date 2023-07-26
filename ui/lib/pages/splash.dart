@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:Artivation/pages/login/login.dart';
-import 'package:Artivation/pages/router.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
@@ -11,8 +9,8 @@ class Splash extends StatefulWidget {
 class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
   var _visible = true;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   startTime() async {
     var _duration = new Duration(seconds: 2);
@@ -29,11 +27,11 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
 
     animationController = new AnimationController(
         vsync: this, duration: new Duration(seconds: 1));
-    animation =
-        new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
+    animation = new CurvedAnimation(
+        parent: animationController!, curve: Curves.easeOut);
 
-    animation.addListener(() => this.setState(() {}));
-    animationController.forward();
+    animation!.addListener(() => this.setState(() {}));
+    animationController!.forward();
 
     setState(() {
       _visible = !_visible;
@@ -82,8 +80,8 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
             children: <Widget>[
               Image.asset(
                 'assets/logo.png',
-                width: animation.value * 250,
-                height: animation.value * 250,
+                width: animation!.value * 250,
+                height: animation!.value * 250,
               ),
             ],
           ),

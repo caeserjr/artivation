@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -7,9 +5,13 @@ class ProfileCard extends StatelessWidget {
   final IconData iconData;
   final dynamic onTap;
   final bool hasBorder;
-  const ProfileCard(
-      {Key key, this.hasBorder = true, this.onTap, this.iconData, this.label})
-      : super(key: key);
+  const ProfileCard({
+    Key? key,
+    this.hasBorder = true,
+    this.onTap,
+    required this.iconData,
+    required this.label,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

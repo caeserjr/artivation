@@ -5,7 +5,9 @@ import 'package:photo_view/photo_view.dart';
 
 class BuyNow extends StatefulWidget {
   final ArtPiece piece;
-  const BuyNow({Key key, this.piece}) : super(key: key);
+  const BuyNow({
+    required this.piece,
+  });
 
   @override
   State<BuyNow> createState() => _BuyNowState();
@@ -25,7 +27,7 @@ class _BuyNowState extends State<BuyNow> {
               PhotoView(
                 minScale: PhotoViewComputedScale.covered,
                 maxScale: PhotoViewComputedScale.contained * 4,
-                imageProvider: AssetImage(widget.piece.pieceImage),
+                imageProvider: AssetImage(widget.piece.pieceImage!),
               ),
               SafeArea(
                 child: Row(

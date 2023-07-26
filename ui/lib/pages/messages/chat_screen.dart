@@ -4,7 +4,6 @@ import 'package:Artivation/models/messages.dart';
 import 'package:Artivation/services/messages/messageApi.dart';
 import 'package:Artivation/widgets/app_text.dart';
 import 'package:Artivation/widgets/chat_bubble.dart';
-import 'package:Artivation/widgets/empty_container.dart';
 import 'package:Artivation/widgets/error_page.dart';
 import 'package:Artivation/widgets/loading_container.dart';
 import 'package:Artivation/widgets/show_dialog.dart';
@@ -14,39 +13,37 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatScreen extends StatefulWidget {
-  final int chatId, chatWith;
-  final String chatName, profileImg;
+  final int? chatId, chatWith;
+  final String? chatName, profileImg;
 
   const ChatScreen({
-    Key key,
     this.chatId,
     this.chatName,
     this.profileImg,
     this.chatWith,
-  }) : super(key: key);
+  });
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  String messageContent, currentUser;
-  bool _loading, _error;
-  bool dataLoaded;
+  String? messageContent, currentUser;
+  bool? _loading, _error;
+  bool? dataLoaded;
 
-  List<Message> messages;
+  List<Message> messages = [];
 
-  ErrorResponse occurredError;
-  SharedPreferences prefs;
+  ErrorResponse? occurredError;
 
   void _showMessageDialog({
-    String message,
-    String severity,
+    String message = "An error occurred",
+    String severity = "error",
     dynamic positiveButtonCallback,
-    String positiveButtonText,
+    String positiveButtonText = "Yes",
     dynamic negativeButtonCallback,
-    String negativeButtonText,
-    String type,
+    String negativeButtonText = "No",
+    String type = "alert",
   }) async {
     await showDialog(
       context: context,
@@ -79,7 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void initiatePreferences() async {
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       currentUser = prefs.getString("currentUser");
     });
@@ -134,7 +131,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (_response.runtimeType.toString() == "ErrorResponse") {
       ErrorResponse _error = _response;
       _showMessageDialog(
-        message: _error.message,
+        message: _error.message!,
         severity: "error",
         type: "alert",
         positiveButtonCallback: () {
@@ -148,7 +145,6 @@ class _ChatScreenState extends State<ChatScreen> {
       // Navigator.of(context).pushAndRemoveUntil(
       //     MaterialPageRoute(builder: (context) => HomePage()),
       //     (route) => false);
-
     }
   }
 
@@ -177,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     width: 35,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(widget.profileImg),
+                        image: AssetImage(widget.profileImg!),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(100),
@@ -186,7 +182,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   Container(
                     margin: EdgeInsets.only(left: 15),
                     child: AppText(
-                      text: widget.chatName,
+                      text: widget.chatName!,
                       isBold: true,
                       size: 15,
                     ),
@@ -196,11 +192,11 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
           Expanded(
-            child: _loading
+            child: _loading!
                 ? LoadingContainer()
-                : _error
+                : _error!
                     ? ErrorPage(
-                        message: occurredError.message,
+                        message: occurredError!.message,
                         action: () {
                           setState(() {
                             _error = false;
@@ -220,9 +216,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           floatingHeader: true,
                           elements: messages,
                           groupBy: (message) => DateTime(
-                            DateTime.parse(message.date).year,
-                            DateTime.parse(message.date).month,
-                            DateTime.parse(message.date).day,
+                            DateTime.parse(message.date!).year,
+                            DateTime.parse(message.date!).month,
+                            DateTime.parse(message.date!).day,
                           ),
                           groupHeaderBuilder: (Message message) => SizedBox(
                             height: 30,
@@ -234,14 +230,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
-                                    DateFormat.yMd().format(
-                                                DateTime.parse(message.date)) ==
+                                    DateFormat.yMd().format(DateTime.parse(
+                                                message.date!)) ==
                                             DateFormat.yMd().format(
                                               new DateTime.now(),
                                             )
                                         ? "Today"
                                         : DateFormat.yMd().format(
-                                                  DateTime.parse(message.date),
+                                                  DateTime.parse(message.date!),
                                                 ) ==
                                                 DateFormat.yMd().format(
                                                   new DateTime.now().subtract(
@@ -252,7 +248,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 )
                                             ? "Yesterday"
                                             : DateFormat.yMMMd().format(
-                                                DateTime.parse(message.date),
+                                                DateTime.parse(message.date!),
                                               ),
                                     style: const TextStyle(
                                       color: Colors.white,
@@ -264,7 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                           ),
                           itemBuilder: (context, Message message) => ChatBubble(
-                            content: message.content,
+                            content: message.content!,
                             isSender: message.senderId.toString() ==
                                     currentUser.toString()
                                 ? true
@@ -295,11 +291,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Icons.sentiment_satisfied_alt_outlined,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .color
-                                  .withOpacity(.64),
+                              color: Colors.amberAccent,
                             ),
                           ),
                         ),
@@ -335,11 +327,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Icons.attach_file,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .color
-                                  .withOpacity(.64),
+                              color: Colors.amberAccent,
                             ),
                           ),
                         ),
@@ -359,11 +347,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Icons.camera_alt_outlined,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .color
-                                  .withOpacity(.64),
+                              color: Colors.amberAccent,
                             ),
                           ),
                         ),
@@ -380,11 +364,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Icons.send,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .color
-                                  .withOpacity(.64),
+                              color: Colors.amberAccent,
                             ),
                           ),
                         ),

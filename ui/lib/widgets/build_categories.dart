@@ -3,14 +3,14 @@ import 'package:Artivation/models/category_item.dart';
 import 'package:flutter/material.dart';
 
 class BuildCategories extends StatefulWidget {
-  const BuildCategories({Key key}) : super(key: key);
+  const BuildCategories({Key? key}) : super(key: key);
 
   @override
   State<BuildCategories> createState() => _BuildCategoriesState();
 }
 
 class _BuildCategoriesState extends State<BuildCategories> {
-  int selectedCategory;
+  int selectedCategory = 0;
   List<CategoryItem> _listCategories = [
     CategoryItem(categoryName: 'Music', icon: Icons.music_note),
     CategoryItem(categoryName: 'Art', icon: Icons.color_lens),
@@ -21,7 +21,6 @@ class _BuildCategoriesState extends State<BuildCategories> {
   @override
   void initState() {
     super.initState();
-    selectedCategory = 0;
   }
 
   @override

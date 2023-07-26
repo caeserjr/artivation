@@ -10,7 +10,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool isLocked;
+  bool isLocked = false;
   void initState() {
     super.initState();
     isLocked = true;

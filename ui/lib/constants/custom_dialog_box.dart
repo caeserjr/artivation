@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomDialogBox extends StatefulWidget {
-  final Image img;
+  final Image? img;
 
-  const CustomDialogBox({Key key, this.img}) : super(key: key);
+  const CustomDialogBox({
+    this.img,
+  });
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -24,12 +26,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     super.dispose();
   }
 
-  ErrorResponse occurredError;
+  ErrorResponse? occurredError;
 
-  String _oldPassword, _password, flag, _token;
+  String? _oldPassword, _password, flag, _token;
   bool _obscureText = true;
   bool _obscureText1 = true;
-  bool _loading, _error = false;
+  bool? _loading, _error = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -131,8 +133,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               ),
                               keyboardType: TextInputType.visiblePassword,
                               // ignore: missing_return
-                              validator: (String value) {
-                                if (value.isEmpty) {
+                              validator: (String? value) {
+                                if (value!.isEmpty) {
                                   return "Old password required";
                                 }
                                 if (value.length < 5) {
@@ -150,7 +152,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                   // return 'Password character count should be more than 5';
                                 }
                               },
-                              onSaved: (String value) {
+                              onSaved: (String? value) {
                                 _oldPassword = value;
                               },
                             ),
@@ -188,11 +190,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               ),
                               keyboardType: TextInputType.visiblePassword,
                               // ignore: missing_return
-                              validator: (String value) {
-                                if (value.isEmpty) {
+                              validator: (String? value) {
+                                if (value!.isEmpty) {
                                   return "New password required.";
-                                }
-                                if (value.length < 5) {
+                                } else if (value.length < 5) {
                                   Fluttertoast.showToast(
                                     msg:
                                         'Password character count should be more than 5.',
@@ -206,7 +207,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                   );
                                 }
                               },
-                              onSaved: (String value) {
+                              onSaved: (String? value) {
                                 _password = value;
                               },
                             ),
@@ -224,10 +225,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                       child: ElevatedButton(
                         onPressed: () {
-                          if (!_formKey.currentState.validate()) {
+                          if (!_formKey.currentState!.validate()) {
                             return;
                           } else {
-                            _formKey.currentState.save();
+                            _formKey.currentState!.save();
                             changePass();
                           }
                         },

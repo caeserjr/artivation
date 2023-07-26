@@ -1,3 +1,5 @@
+import 'package:Artivation/models/pieces.dart';
+import 'package:Artivation/models/users.dart';
 import 'package:Artivation/pages/cart/buy_now.dart';
 import 'package:Artivation/pages/explore/explore.dart';
 import 'package:Artivation/pages/login/login.dart';
@@ -9,7 +11,6 @@ import 'package:Artivation/pages/welcome/welcome.dart';
 import 'package:Artivation/screens/settings.dart';
 import 'package:Artivation/widgets/preview_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return ScrollConfiguration(
           behavior: MyBehavior(),
-          child: child,
+          child: child!,
         );
       },
       title: 'Artivation',
@@ -67,28 +68,36 @@ class MyApp extends StatelessWidget {
             );
           case 'UserProfile':
             return MaterialPageRoute(
-              builder: (context) => UserProfile(user: settings.arguments),
+              builder: (context) => UserProfile(
+                user: settings.arguments as User,
+              ),
             );
           case 'UserSettings':
             return MaterialPageRoute(
-              builder: (context) => UserSettings(user: settings.arguments),
+              builder: (context) => UserSettings(
+                user: settings.arguments as User,
+              ),
             );
           case 'PreviewImage':
             return MaterialPageRoute(
-              builder: (context) => PreviewImage(piece: settings.arguments),
+              builder: (context) => PreviewImage(
+                piece: settings.arguments as ArtPiece,
+              ),
             );
           case 'BuyNow':
             return MaterialPageRoute(
-              builder: (context) => BuyNow(piece: settings.arguments),
+              builder: (context) => BuyNow(
+                piece: settings.arguments as ArtPiece,
+              ),
             );
           case 'Messages':
-            List<Object> args = settings.arguments;
+            var args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(
               builder: (context) => ChatScreen(
-                chatId: args[0],
-                profileImg: args[1],
-                chatName: args[2],
-                chatWith: args[3],
+                chatId: args['chatId'],
+                profileImg: args["image"],
+                chatName: args["senderName"],
+                chatWith: args["senderId"],
               ),
             );
           default:

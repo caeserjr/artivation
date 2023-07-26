@@ -3,10 +3,9 @@ import '../cart_data.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
-    Key key,
-    @required this.size,
-    @required this.cart,
-  }) : super(key: key);
+    required this.size,
+    required this.cart,
+  });
 
   final Size size;
   final Cart cart;
@@ -29,8 +28,11 @@ class CartItemCard extends StatelessWidget {
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(15),
                     image: DecorationImage(
-                        image: AssetImage(cart.product.image),
-                        fit: BoxFit.cover),
+                      image: AssetImage(
+                        cart.product.image!,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -40,7 +42,7 @@ class CartItemCard extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                    cart.product.title,
+                    cart.product.title!,
                     style: TextStyle(
                       fontSize: 16,
                     ),

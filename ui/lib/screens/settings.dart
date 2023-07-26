@@ -3,13 +3,15 @@ import 'package:Artivation/constants/custom_dialog_box.dart';
 import 'package:Artivation/models/users.dart';
 import 'package:Artivation/screens/components/profileCard.dart';
 import 'package:Artivation/widgets/app_text.dart';
-import 'package:Artivation/widgets/simple_nav.dart';
 import 'package:flutter/material.dart';
 
 class UserSettings extends StatefulWidget {
-  final User user;
+  final User? user;
 
-  const UserSettings({Key key, this.user}) : super(key: key);
+  const UserSettings({
+    Key? key,
+    this.user,
+  }) : super(key: key);
 
   @override
   _UserSettingsState createState() => _UserSettingsState();
@@ -181,10 +183,11 @@ class _UserSettingsState extends State<UserSettings> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                            blurRadius: 5,
-                                            color: Colors.lightBlue[100]
-                                                .withOpacity(.55),
-                                            spreadRadius: 2)
+                                          blurRadius: 5,
+                                          color: Colors.lightBlue.shade100
+                                              .withOpacity(.55),
+                                          spreadRadius: 2,
+                                        )
                                       ],
                                       borderRadius: BorderRadius.circular(8)),
                                   child: Center(

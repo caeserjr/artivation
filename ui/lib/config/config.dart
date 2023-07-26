@@ -3,6 +3,6 @@
 const String base_url = '172.23.9.194:1912';
 const int timeout = 10;
 
-const Object headers = {
+const headers = {
   'Content-Type': 'application/json',
 };

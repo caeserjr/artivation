@@ -11,29 +11,27 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Inbox extends StatefulWidget {
-  const Inbox({Key key}) : super(key: key);
+  const Inbox({Key? key}) : super(key: key);
 
   @override
   State<Inbox> createState() => _InboxState();
 }
 
 class _InboxState extends State<Inbox> {
-  bool _loading, _error;
-  ErrorResponse occurredError;
-  List<Message> chats;
-  SharedPreferences prefs;
+  late bool _loading, _error;
+  ErrorResponse? occurredError;
+  List<Message> chats = [];
 
   @override
   void initState() {
     _loading = false;
     _error = false;
-    chats = [];
     getInboxItems();
     super.initState();
   }
 
   Future<void> getInboxItems() async {
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _loading = true;
     });
@@ -91,7 +89,7 @@ class _InboxState extends State<Inbox> {
                   ? LoadingContainer()
                   : _error
                       ? ErrorPage(
-                          message: occurredError.message,
+                          message: occurredError!.message,
                           action: () {
                             setState(() {
                               _error = false;
@@ -137,13 +135,12 @@ class _InboxState extends State<Inbox> {
 }
 
 class InboxItem extends StatefulWidget {
-  final String senderName, msgPreview, image;
-  final bool unread;
-  final String time;
-  final int chatId, senderId;
+  final String? senderName, msgPreview, image;
+  final bool? unread;
+  final String? time;
+  final int? chatId, senderId;
 
   const InboxItem({
-    Key key,
     this.msgPreview,
     this.chatId,
     this.image,
@@ -151,7 +148,7 @@ class InboxItem extends StatefulWidget {
     this.senderId,
     this.time,
     this.unread = false,
-  }) : super(key: key);
+  });
 
   @override
   State<InboxItem> createState() => _InboxItemState();
@@ -163,11 +160,12 @@ class _InboxItemState extends State<InboxItem> {
     return GestureDetector(
       onLongPress: () {},
       onTap: () {
-        List<Object> _args = [];
-        _args.add(widget.chatId);
-        _args.add(widget.image);
-        _args.add(widget.senderName);
-        _args.add(widget.senderId);
+        Map<String, dynamic> _args = {
+          "chatId": widget.chatId,
+          "image": widget.image,
+          "senderName": widget.senderName,
+          "senderId": widget.senderId,
+        };
         Navigator.of(context).pushNamed("Messages", arguments: _args);
       },
       child: Container(
@@ -175,7 +173,7 @@ class _InboxItemState extends State<InboxItem> {
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(top: 2.5, right: 10),
         decoration: BoxDecoration(
-          color: widget.unread
+          color: widget.unread!
               ? Color.fromARGB(96, 204, 219, 215)
               : Colors.transparent,
           borderRadius: BorderRadius.only(
@@ -195,7 +193,7 @@ class _InboxItemState extends State<InboxItem> {
                   width: 45,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(widget.image),
+                      image: AssetImage(widget.image!),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(100),
@@ -217,7 +215,7 @@ class _InboxItemState extends State<InboxItem> {
                             width: MediaQuery.of(context).size.width - 90,
                             child: AppText(
                               size: 15,
-                              text: widget.senderName,
+                              text: widget.senderName!,
                               isBold: true,
                             ),
                           ),
@@ -228,7 +226,7 @@ class _InboxItemState extends State<InboxItem> {
                             width: MediaQuery.of(context).size.width - 90,
                             child: AppText(
                               size: 14,
-                              text: widget.msgPreview,
+                              text: widget.msgPreview!,
                             ),
                           ),
                         ),
@@ -243,7 +241,7 @@ class _InboxItemState extends State<InboxItem> {
               child: Column(
                 children: [
                   Text(
-                    widget.time,
+                    widget.time!,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

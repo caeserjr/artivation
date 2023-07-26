@@ -30,7 +30,7 @@ class OrDivider extends StatelessWidget {
 
 class BuildDivider extends StatelessWidget {
   const BuildDivider({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

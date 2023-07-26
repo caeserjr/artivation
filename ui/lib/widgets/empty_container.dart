@@ -1,14 +1,13 @@
-import 'package:Artivation/constants/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 
 class EmptyContainer extends StatefulWidget {
   final String message, svgIcon;
-  const EmptyContainer(
-      {Key key, this.message, this.svgIcon = "assets/icons/attention.svg"})
-      : super(key: key);
+  const EmptyContainer({
+    Key? key,
+    required this.message,
+    this.svgIcon = "assets/icons/attention.svg",
+  }) : super(key: key);
 
   @override
   State<EmptyContainer> createState() => _EmptyContainerState();

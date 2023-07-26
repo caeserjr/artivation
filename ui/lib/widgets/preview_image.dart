@@ -13,17 +13,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreviewImage extends StatefulWidget {
   final ArtPiece piece;
-  const PreviewImage({Key key, this.piece}) : super(key: key);
+  const PreviewImage({
+    Key? key,
+    required this.piece,
+  }) : super(key: key);
 
   @override
   State<PreviewImage> createState() => _PreviewImageState();
 }
 
 class _PreviewImageState extends State<PreviewImage> {
-  bool _error, _loadingArtist, isLiked;
-  ErrorResponse occurredError;
-  User artist;
-  SharedPreferences prefs;
+  bool _error = false, _loadingArtist = false, isLiked = false;
+  ErrorResponse? occurredError;
+  User? artist;
 
   void initState() {
     super.initState();
@@ -35,7 +37,7 @@ class _PreviewImageState extends State<PreviewImage> {
   }
 
   void checkLikeStatus() async {
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var _response = await PiecesApi.likeStatus(
       payload: {
         "userId": prefs.getString("currentUser"),
@@ -232,8 +234,8 @@ class _PreviewImageState extends State<PreviewImage> {
                                                                   "TZS ${widget.piece.price}",
                                                               isBold: true,
                                                               size: 22,
-                                                              color: Colors
-                                                                  .grey[700],
+                                                              color: Colors.grey
+                                                                  .shade700,
                                                             ),
                                                           )
                                                         ],

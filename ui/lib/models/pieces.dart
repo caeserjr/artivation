@@ -1,22 +1,16 @@
 class ArtPiece {
-  int price;
-  int pieceArtist;
-  int category;
-  int pieceId;
-  String pieceName;
-  String pieceImage;
-  String pieceDesc;
-  String pieceDate;
+  int price, pieceArtist, category, pieceId;
+  String pieceName, pieceImage, pieceDesc, pieceDate;
 
   ArtPiece({
-    this.pieceId,
-    this.pieceName,
-    this.pieceDesc,
-    this.pieceImage,
-    this.price,
-    this.pieceArtist,
-    this.pieceDate,
-    this.category,
+    required this.pieceId,
+    required this.pieceName,
+    required this.pieceDesc,
+    required this.pieceImage,
+    required this.price,
+    required this.pieceArtist,
+    required this.pieceDate,
+    required this.category,
   });
 
   factory ArtPiece.fromJSON(dynamic json) {
@@ -28,6 +22,7 @@ class ArtPiece {
       pieceDesc: json["pieceDesc"],
       pieceDate: json["pieceDate"],
       pieceArtist: json["pieceArtist"],
+      category: json["pieceCategory"],
     );
   }
 

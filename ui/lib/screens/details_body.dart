@@ -7,7 +7,10 @@ import 'components/create_desc.dart';
 class DetailBody extends StatelessWidget {
   final Product product;
 
-  const DetailBody({Key key, this.product}) : super(key: key);
+  const DetailBody({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class DetailBody extends StatelessWidget {
             child: Hero(
               tag: 'image${product.id}',
               child: Image.asset(
-                product.image,
+                product.image!,
                 fit: BoxFit.cover,
               ),
             ),
@@ -60,7 +63,7 @@ class DetailBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                product.title,
+                                product.title!,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 23,

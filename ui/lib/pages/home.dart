@@ -15,7 +15,7 @@ class FragHome extends StatefulWidget {
 }
 
 class _ViewPageState extends State<FragHome> {
-  double currentPage = products.length - 1.0;
+  double? currentPage = products.length - 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,12 @@ class _ViewPageState extends State<FragHome> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding:
-                const EdgeInsets.only(left: 12, right: 14, top: 15, bottom: 15),
+            padding: const EdgeInsets.only(
+              left: 12,
+              right: 14,
+              top: 15,
+              bottom: 15,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -100,7 +104,7 @@ class _ViewPageState extends State<FragHome> {
             height: MediaQuery.of(context).size.height * .6,
             child: Stack(
               children: <Widget>[
-                CardScrollWidget(currentPage),
+                CardScrollWidget(currentPage!),
                 Positioned.fill(
                   child: PageView.builder(
                     itemCount: products.length,
@@ -159,9 +163,9 @@ class _ViewPageState extends State<FragHome> {
 
 // ignore: must_be_immutable
 class CardScrollWidget extends StatelessWidget {
-  var currentPage;
-  var padding = 35;
-  var verticalInset = 20;
+  double currentPage;
+  double padding = 35;
+  double verticalInset = 20;
 
   CardScrollWidget(this.currentPage);
   @override
@@ -208,7 +212,7 @@ class CardScrollWidget extends StatelessWidget {
                         color: Colors.grey.withOpacity(.2),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey[200],
+                            color: Colors.grey.shade200,
                             offset: Offset(3, -6),
                             blurRadius: 10,
                           ),
@@ -221,7 +225,7 @@ class CardScrollWidget extends StatelessWidget {
                           Hero(
                             tag: 'image${products[i].id}',
                             child: Image.asset(
-                              products[i].image,
+                              products[i].image!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -240,7 +244,7 @@ class CardScrollWidget extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(15),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.blueGrey[400]
+                                          color: Colors.blueGrey.shade400
                                               .withOpacity(.1),
                                           offset: Offset(2, 3),
                                           blurRadius: 12,
@@ -249,11 +253,12 @@ class CardScrollWidget extends StatelessWidget {
                                       color: Colors.black.withOpacity(.2),
                                     ),
                                     child: Text(
-                                      products[i].title,
+                                      products[i].title!,
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 25,
-                                          fontFamily: 'SF-Pro-Text-Regular'),
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontFamily: 'SF-Pro-Text-Regular',
+                                      ),
                                     ),
                                   ),
                                 ),

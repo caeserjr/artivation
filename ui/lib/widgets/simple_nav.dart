@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SimpleNavBar extends StatelessWidget {
   const SimpleNavBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

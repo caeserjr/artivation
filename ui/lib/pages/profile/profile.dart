@@ -5,8 +5,10 @@ import 'package:Artivation/widgets/profile_item.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatefulWidget {
-  final User user;
-  const UserProfile({Key key, this.user}) : super(key: key);
+  final User? user;
+  const UserProfile({
+    this.user,
+  });
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -121,7 +123,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                   SizedBox(
-                    height: 20, 
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,

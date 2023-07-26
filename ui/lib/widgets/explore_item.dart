@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 class ExploreItem extends StatefulWidget {
   final ArtPiece piece;
-  const ExploreItem({Key key, this.piece}) : super(key: key);
+  const ExploreItem({
+    Key? key,
+    required this.piece,
+  }) : super(key: key);
 
   @override
   State<ExploreItem> createState() => _ExploreItemState();

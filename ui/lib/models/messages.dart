@@ -1,11 +1,11 @@
 class Message {
-  final int chatId;
-  final String content;
-  final String date;
-  final int senderId;
-  final String senderName;
-  final String senderImage;
-  final bool unread;
+  final int? chatId;
+  final String? content;
+  final String? date;
+  final int? senderId;
+  final String? senderName;
+  final String? senderImage;
+  final bool? unread;
 
   Message({
     this.senderName,

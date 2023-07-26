@@ -14,13 +14,12 @@ class PieceStaggered extends StatefulWidget {
 }
 
 class _PieceStaggeredState extends State<PieceStaggered> {
-  bool _loading, _error;
-  ErrorResponse occurredError;
-  List<ArtPiece> pieces;
+  bool _loading = false, _error = false;
+  ErrorResponse? occurredError;
+  List<ArtPiece> pieces = [];
 
   void initState() {
     super.initState();
-    pieces = [];
     _loading = false;
     _error = false;
     getExploreItems();
@@ -59,7 +58,7 @@ class _PieceStaggeredState extends State<PieceStaggered> {
     return Expanded(
       child: _error
           ? ErrorPage(
-              message: occurredError.message,
+              message: occurredError!.message,
               action: () {
                 setState(() {
                   _error = false;

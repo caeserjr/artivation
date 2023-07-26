@@ -7,10 +7,10 @@ class ChatBubble extends StatelessWidget {
   final bool isSender;
 
   const ChatBubble({
-    this.content,
+    required this.content,
     this.image = "assets/icons/user.png",
     this.isSender = false,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

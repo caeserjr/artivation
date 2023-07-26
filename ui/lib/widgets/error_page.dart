@@ -1,13 +1,14 @@
 import 'package:Artivation/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ErrorPage extends StatefulWidget {
-  final String message;
-  final Function action;
-  const ErrorPage({Key key, this.message, this.action}) : super(key: key);
+  final String? message;
+  final dynamic action;
+  const ErrorPage({
+    this.message = "",
+    required this.action,
+  });
 
   @override
   State<ErrorPage> createState() => _ErrorPageState();
@@ -31,7 +32,7 @@ class _ErrorPageState extends State<ErrorPage> {
             margin: EdgeInsets.only(top: 10, bottom: 5),
             alignment: Alignment.center,
             child: Text(
-              widget.message,
+              widget.message!,
               style: TextStyle(
                 fontSize: 20,
               ),

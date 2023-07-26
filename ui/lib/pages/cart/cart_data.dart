@@ -1,11 +1,10 @@
 import 'package:Artivation/models/product.dart';
-import 'package:flutter/material.dart';
 
 class Cart {
   final Product product;
   final int numOfItems;
 
-  Cart({@required this.product, @required this.numOfItems});
+  Cart({required this.product, required this.numOfItems});
 }
 
 List<Cart> cartItems = [

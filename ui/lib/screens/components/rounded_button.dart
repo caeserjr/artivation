@@ -1,17 +1,15 @@
 import 'package:Artivation/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
 
 class RoundedButton extends StatefulWidget {
   final String text;
-  final Function press;
+  final dynamic press;
   final Color color, textColor;
   final bool isLoading;
 
   const RoundedButton({
-    Key key,
-    this.text,
+    Key? key,
+    required this.text,
     this.isLoading = false,
     this.press,
     this.color = Constants.kPrimaryColor,
@@ -51,15 +49,20 @@ class _RoundedButtonState extends State<RoundedButton> {
                   alignment: Alignment.center,
                   child: widget.isLoading
                       ? Container(
-                          child: Center(
-                            child: Loading(
-                                indicator: BallPulseIndicator(), size: 40.0),
-                          ),
-                        )
+                          //todo add loading container
+                          // child: Center(
+                          //   child: Loading(
+                          //     indicator: BallPulseIndicator(),
+                          //     size: 40.0,
+                          //   ),
+                          // ),
+                          )
                       : Text(
                           widget.text,
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: widget.textColor),
+                          style: TextStyle(
+                            color: widget.textColor,
+                          ),
                         ),
                 ),
               ),
