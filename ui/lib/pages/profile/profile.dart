@@ -215,7 +215,7 @@ class WaveClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     debugPrint(size.width.toString());
     var path = new Path();
-    path.lineTo(0, size.height - 80);
+    path.lineTo(0, size.height - 70);
     var firstStart = Offset(size.width / 5, size.height - 15);
 
     var firstEnd = Offset(size.width / 2.5, size.height - 50);

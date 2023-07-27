@@ -162,8 +162,7 @@ class _PreviewImageState extends State<PreviewImage> {
                                     margin: EdgeInsets.only(left: 15),
                                     child: AppText(
                                       color: Colors.white,
-                                      text: widget.piece.pieceDesc ??
-                                          "Piece Description",
+                                      text: widget.piece.pieceDesc,
                                       size: 12,
                                     ),
                                   ),
@@ -173,7 +172,7 @@ class _PreviewImageState extends State<PreviewImage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: 10),
+                                    margin: EdgeInsets.only(left: 5),
                                     height: 90,
                                     width: 80,
                                     child: InkWell(
@@ -195,7 +194,6 @@ class _PreviewImageState extends State<PreviewImage> {
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 10),
                                     height: 40,
                                     child: ElevatedButton(
                                       onPressed: () {

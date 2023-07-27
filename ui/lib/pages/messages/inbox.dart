@@ -86,7 +86,9 @@ class _InboxState extends State<Inbox> {
             ),
             Expanded(
               child: _loading
-                  ? LoadingContainer()
+                  ? LoadingContainer(
+                      itemCount: 7,
+                    )
                   : _error
                       ? ErrorPage(
                           message: occurredError!.message,

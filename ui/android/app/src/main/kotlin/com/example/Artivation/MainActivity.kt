@@ -1,4 +1,4 @@
-package com.example.Artivation
+package com.example.artivation
 
 import io.flutter.embedding.android.FlutterActivity
 

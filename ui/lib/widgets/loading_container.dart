@@ -10,7 +10,7 @@ class LoadingContainer extends StatefulWidget {
     this.size = 40,
     this.height = 40,
     this.width,
-    this.type = "profile",
+    this.type = "",
     this.itemCount = 10,
   }) : super(key: key);
 
